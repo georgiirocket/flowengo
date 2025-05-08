@@ -1,8 +1,8 @@
 [package]
-name = "flowengo"
+name = "Flowengo"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "Flowengo is a clean, fast, and minimalist desktop application for managing tasks with a Kanban-style board."
+authors = ["Rocket_GR"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
