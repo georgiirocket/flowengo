@@ -6,7 +6,6 @@ use std::sync::Mutex;
 use tauri::{AppHandle, Manager};
 use tauri_plugin_store::StoreExt;
 
-mod helpers;
 mod model;
 mod constants;
 
@@ -26,7 +25,7 @@ async fn get_app_settings(app_handle: AppHandle) -> Result<model::UserData, Stri
 
 //Create user
 #[tauri::command]
-async fn create_user(app_handle: AppHandle, name: String) -> Result<model::UserData, String> {
+async fn create_user(app_handle: AppHandle, name: String, password: String) -> Result<model::UserData, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
 
@@ -55,7 +54,6 @@ pub fn run() {
         is_initialized: false,
         user_name: "".into(),
         create_date: "".into(),
-        db_key: "".into(),
     };
 
     tauri::Builder::default()

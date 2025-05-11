@@ -5,7 +5,6 @@ pub struct AppState {
     pub is_initialized: bool,
     pub user_name: String,
     pub create_date: String,
-    pub db_key: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
