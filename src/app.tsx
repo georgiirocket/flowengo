@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import { useAppCtxStore } from "@common/providers/app";
-import { ROUTES } from "@common/constants/routest.ts";
+import { ROUTES } from "@common/constants/routes.ts";
 import "./app.css";
 
 function App() {
