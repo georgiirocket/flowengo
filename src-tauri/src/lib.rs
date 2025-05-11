@@ -25,7 +25,7 @@ async fn get_app_settings(app_handle: AppHandle) -> Result<model::UserData, Stri
 
 //Create user
 #[tauri::command]
-async fn create_user(app_handle: AppHandle, name: String, password: String) -> Result<model::UserData, String> {
+async fn create_app_settings(app_handle: AppHandle, name: String) -> Result<model::UserData, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
 
@@ -81,7 +81,7 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_app_settings, create_user])
+        .invoke_handler(tauri::generate_handler![get_app_settings, create_app_settings])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

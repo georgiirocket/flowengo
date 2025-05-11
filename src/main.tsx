@@ -5,6 +5,7 @@ import HeroUiProvider from "@common/providers/hero-ui";
 import ThemeProvider from "@common/providers/theme";
 import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
+import { AppProvider } from "@common/providers/app";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               location.pathname = "/";
             }}
           >
-            <App />
+            <AppProvider>
+              <App />
+            </AppProvider>
           </ErrorBoundary>
         </BrowserRouter>
       </HeroUiProvider>
