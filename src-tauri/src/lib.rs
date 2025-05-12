@@ -8,6 +8,7 @@ use tauri_plugin_store::StoreExt;
 
 mod model;
 mod constants;
+mod helpers;
 
 //Get settings app
 #[tauri::command]
@@ -48,6 +49,12 @@ async fn create_app_settings(app_handle: AppHandle, name: String) -> Result<mode
     Ok(new_user_data)
 }
 
+//Generate random string
+#[tauri::command]
+fn get_random_string() -> String {
+    helpers::random_string(20)
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let settings = model::AppState {
@@ -81,7 +88,7 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_app_settings, create_app_settings])
+        .invoke_handler(tauri::generate_handler![get_app_settings, create_app_settings, get_random_string])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

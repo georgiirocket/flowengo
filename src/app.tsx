@@ -14,6 +14,7 @@ function App() {
         {isAuth && (
           <Route path={ROUTES.dashboard} element={<div>Dashboard</div>} />
         )}
+        <Route path="*" element={<h1>All</h1>} />
       </Routes>
     </main>
   );
