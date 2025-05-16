@@ -73,7 +73,7 @@ impl CommonStore {
 impl ProtectedStore {
     pub fn new()  -> Self {
         Self {
-            secure_field: "".to_string(),
+            secure_field: "{}".to_string(),
         }
     }
 }

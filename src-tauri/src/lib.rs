@@ -7,12 +7,12 @@ use tauri::{AppHandle, Manager};
 use tauri_plugin_store::StoreExt;
 
 mod model;
-mod constants;
 mod helpers;
+mod constants;
 
 //Get settings app
 #[tauri::command]
-async fn get_app_settings(app_handle: AppHandle) -> Result<model::UserData, String> {
+async fn get_app_state(app_handle: AppHandle) -> Result<model::UserData, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
 
     let state = state.lock().map_err(|e| e.to_string())?;
@@ -22,7 +22,7 @@ async fn get_app_settings(app_handle: AppHandle) -> Result<model::UserData, Stri
 
 //Create user
 #[tauri::command]
-async fn create_app_settings(app_handle: AppHandle, name: String, db_key: String) -> Result<model::UserData, String> {
+async fn sign_up(app_handle: AppHandle, name: String, db_key: String) -> Result<model::UserData, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
 
@@ -35,17 +35,6 @@ async fn create_app_settings(app_handle: AppHandle, name: String, db_key: String
     common_store.set("data", json!(model::CommonStore::new(&new_user_data)));
 
     Ok(new_user_data)
-}
-
-//Set db key
-#[tauri::command]
-async fn set_db_key(app_handle: AppHandle, key: String) -> Result<String, String> {
-    let state = app_handle.state::<Mutex<model::AppState>>();
-    let mut state = state.lock().map_err(|e| e.to_string())?;
-
-    state.set_db_key(key);
-
-    Ok("The key has been added".to_string())
 }
 
 //Drop all data
@@ -74,7 +63,6 @@ fn get_random_string() -> String {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_stronghold::Builder::with_argon2(constants::SALT.as_ref()).build())
         .manage(Mutex::new(model::AppState::new()))
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
@@ -102,7 +90,7 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_app_settings, create_app_settings, get_random_string])
+        .invoke_handler(tauri::generate_handler![get_app_state, sign_up, drop_all_data, get_random_string])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
