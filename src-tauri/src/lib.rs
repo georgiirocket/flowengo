@@ -17,11 +17,7 @@ async fn get_app_settings(app_handle: AppHandle) -> Result<model::UserData, Stri
 
     let state = state.lock().map_err(|e| e.to_string())?;
 
-    Ok(model::UserData {
-        is_initialized: state.is_initialized,
-        user_name: state.user_name.clone(),
-        create_date: state.create_date.clone(),
-    })
+    Ok(model::UserData::new(state.is_initialized, state.user_name.clone(), state.create_date.clone()))
 }
 
 //Create user
@@ -34,11 +30,7 @@ async fn create_app_settings(app_handle: AppHandle, name: String) -> Result<mode
         .store(constants::SETTINGS_DB_NAME)
         .map_err(|e| e.to_string())?;
 
-    let new_user_data = model::UserData {
-        is_initialized: true,
-        user_name: name,
-        create_date: Utc::now().to_rfc3339(),
-    };
+    let new_user_data = model::UserData::new(true, name, Utc::now().to_rfc3339());
 
     store.set(constants::SETTINGS_NAME_KEY, json!(new_user_data));
 
@@ -57,15 +49,9 @@ fn get_random_string() -> String {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let settings = model::AppState {
-        is_initialized: false,
-        user_name: "".into(),
-        create_date: "".into(),
-    };
-
     tauri::Builder::default()
         .plugin(tauri_plugin_stronghold::Builder::with_argon2(constants::SALT.as_ref()).build())
-        .manage(Mutex::new(settings))
+        .manage(Mutex::new(model::AppState::new()))
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
             let store = app.store(constants::SETTINGS_DB_NAME)?;

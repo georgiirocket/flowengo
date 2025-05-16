@@ -20,3 +20,23 @@ pub struct UserData {
     pub user_name: String,
     pub create_date: String,
 }
+
+impl AppState {
+    pub fn new() -> Self {
+        Self {
+            is_initialized: false,
+            user_name: "".to_string(),
+            create_date: "".to_string(),
+        }
+    }
+}
+
+impl UserData {
+    pub fn new(is_initialized: bool, user_name: String, create_date: String) -> Self {
+        Self {
+            is_initialized,
+            user_name,
+            create_date,
+        }
+    }
+}
