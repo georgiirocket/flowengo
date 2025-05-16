@@ -11,7 +11,7 @@ mod helpers;
 mod constants;
 mod crypto;
 
-//Get settings app
+//Get state app
 #[tauri::command]
 async fn get_app_state(app_handle: AppHandle) -> Result<model::UserData, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
@@ -21,7 +21,7 @@ async fn get_app_state(app_handle: AppHandle) -> Result<model::UserData, String>
     Ok(model::UserData::new(state.is_initialized, state.user_name.clone(), state.create_date.clone()))
 }
 
-//Create user
+//Sign up
 #[tauri::command]
 async fn sign_up(app_handle: AppHandle, name: String, password: String) -> Result<model::SignUpResponse, String> {
     let common_store = app_handle.store(constants::STORE_PATH_COMMON).map_err(|e| e.to_string())?;
