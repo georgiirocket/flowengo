@@ -26,19 +26,41 @@ async fn create_app_settings(app_handle: AppHandle, name: String) -> Result<mode
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
 
-    let store = app_handle
-        .store(constants::SETTINGS_DB_NAME)
-        .map_err(|e| e.to_string())?;
-
+    let common_store = app_handle.store(constants::STORE_PATH_COMMON).map_err(|e| e.to_string())?;
     let new_user_data = model::UserData::new(true, name, Utc::now().to_rfc3339());
 
-    store.set(constants::SETTINGS_NAME_KEY, json!(new_user_data));
-
-    state.user_name = new_user_data.user_name.clone();
-    state.create_date = new_user_data.create_date.clone();
-    state.is_initialized = new_user_data.is_initialized;
+    state.fill_state(&new_user_data);
+    common_store.set("data", json!(model::CommonStore::new(&new_user_data)));
 
     Ok(new_user_data)
+}
+
+//Set db key
+#[tauri::command]
+async fn set_db_key(app_handle: AppHandle, key: String) -> Result<String, String> {
+    let state = app_handle.state::<Mutex<model::AppState>>();
+    let mut state = state.lock().map_err(|e| e.to_string())?;
+
+    state.set_db_key(key);
+
+    Ok("The key has been added".to_string())
+}
+
+//Drop all data
+#[tauri::command]
+async fn drop_all_data(app_handle: AppHandle) -> Result<String, String> {
+    let state = app_handle.state::<Mutex<model::AppState>>();
+    let mut state = state.lock().map_err(|e| e.to_string())?;
+
+    let common_store = app_handle.store(constants::STORE_PATH_COMMON).map_err(|e| e.to_string())?;
+    let protected_store = app_handle.store(constants::STORE_PATH_PROTECTED).map_err(|e| e.to_string())?;
+
+    common_store.clear();
+    protected_store.clear();
+
+    state.drop_state();
+
+    Ok("The full user data was dropped".to_string())
 }
 
 //Generate random string
@@ -54,14 +76,18 @@ pub fn run() {
         .manage(Mutex::new(model::AppState::new()))
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
-            let store = app.store(constants::SETTINGS_DB_NAME)?;
+            let common_store = app.store(constants::STORE_PATH_COMMON)?;
+            let protected_store = app.store(constants::STORE_PATH_PROTECTED)?;
 
-            if store.has(constants::SETTINGS_NAME_KEY) {
-                let value = store
-                    .get(constants::SETTINGS_NAME_KEY)
-                    .expect("Failed to get settings from store");
+            protected_store.clear();
 
-                let app_data: model::StoreState = from_value(value).expect("Failed to parse settings");
+            if !protected_store.has("data") {
+                protected_store.set("data", json!(model::ProtectedStore::new()));
+            }
+
+            if common_store.has("data") {
+                let value = common_store.get("data").expect("Failed to get common from store");
+                let app_data: model::CommonStore = from_value(value).expect("Failed to parse common store");
 
                 let state = app.state::<Mutex<model::AppState>>();
                 let mut state = state.lock().map_err(|e| e.to_string())?;
