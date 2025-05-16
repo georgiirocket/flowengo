@@ -22,7 +22,7 @@ async fn get_app_settings(app_handle: AppHandle) -> Result<model::UserData, Stri
 
 //Create user
 #[tauri::command]
-async fn create_app_settings(app_handle: AppHandle, name: String) -> Result<model::UserData, String> {
+async fn create_app_settings(app_handle: AppHandle, name: String, db_key: String) -> Result<model::UserData, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
 
@@ -30,6 +30,8 @@ async fn create_app_settings(app_handle: AppHandle, name: String) -> Result<mode
     let new_user_data = model::UserData::new(true, name, Utc::now().to_rfc3339());
 
     state.fill_state(&new_user_data);
+    state.set_db_key(db_key);
+
     common_store.set("data", json!(model::CommonStore::new(&new_user_data)));
 
     Ok(new_user_data)
