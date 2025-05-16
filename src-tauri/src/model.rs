@@ -25,7 +25,7 @@ pub struct UserData {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SignUpResponse {
     pub user_data: UserData,
-    pub secure_data: String,
+    pub json_str: String,
 }
 
 impl AppState {

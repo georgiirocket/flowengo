@@ -9,14 +9,14 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SecureData {
-    secure_field: String,
+    json_str: String,
     nonce: String,
     salt: String
 }
 
 impl SecureData {
     pub fn get_secure_field(&self) -> String {
-        self.secure_field.clone()
+        self.json_str.clone()
     }
 
     pub async fn encrypt(password: &String, plaintext: String) -> Result<Self, String> {
@@ -41,7 +41,7 @@ impl SecureData {
             .map_err(|e| e.to_string())?;
 
         Ok(Self {
-            secure_field: general_purpose::STANDARD.encode(&ciphertext),
+            json_str: general_purpose::STANDARD.encode(&ciphertext),
             nonce: general_purpose::STANDARD.encode(&nonce_bytes),
             salt: salt.to_string()
         })

@@ -39,7 +39,7 @@ async fn sign_up(app_handle: AppHandle, name: String, password: String) -> Resul
     state.fill_state(&user_data);
     state.set_password(password);
 
-    Ok(model::SignUpResponse {user_data, secure_data: secure.get_secure_field() })
+    Ok(model::SignUpResponse {user_data, json_str: secure.get_secure_field() })
 }
 
 //Drop all data
