@@ -9,6 +9,7 @@ use tauri_plugin_store::StoreExt;
 mod model;
 mod helpers;
 mod constants;
+mod crypto;
 
 //Get settings app
 #[tauri::command]
@@ -22,19 +23,23 @@ async fn get_app_state(app_handle: AppHandle) -> Result<model::UserData, String>
 
 //Create user
 #[tauri::command]
-async fn sign_up(app_handle: AppHandle, name: String, db_key: String) -> Result<model::UserData, String> {
+async fn sign_up(app_handle: AppHandle, name: String, password: String) -> Result<model::SignUpResponse, String> {
+    let common_store = app_handle.store(constants::STORE_PATH_COMMON).map_err(|e| e.to_string())?;
+    let protected_store = app_handle.store(constants::STORE_PATH_PROTECTED).map_err(|e| e.to_string())?;
+
+    let secure = crypto::SecureData::encrypt(&password, "{}".to_string()).await.expect("dc");
+    let user_data = model::UserData::new(true, name, Utc::now().to_rfc3339());
+
+    common_store.set("data", json!(model::CommonStore::new(&user_data)));
+    protected_store.set("data", json!(secure));
+
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
 
-    let common_store = app_handle.store(constants::STORE_PATH_COMMON).map_err(|e| e.to_string())?;
-    let new_user_data = model::UserData::new(true, name, Utc::now().to_rfc3339());
+    state.fill_state(&user_data);
+    state.set_password(password);
 
-    state.fill_state(&new_user_data);
-    state.set_db_key(db_key);
-
-    common_store.set("data", json!(model::CommonStore::new(&new_user_data)));
-
-    Ok(new_user_data)
+    Ok(model::SignUpResponse {user_data, secure_data: secure.get_secure_field() })
 }
 
 //Drop all data
@@ -67,13 +72,6 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
             let common_store = app.store(constants::STORE_PATH_COMMON)?;
-            let protected_store = app.store(constants::STORE_PATH_PROTECTED)?;
-
-            protected_store.clear();
-
-            if !protected_store.has("data") {
-                protected_store.set("data", json!(model::ProtectedStore::new()));
-            }
 
             if common_store.has("data") {
                 let value = common_store.get("data").expect("Failed to get common from store");

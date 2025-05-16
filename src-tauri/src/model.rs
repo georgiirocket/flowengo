@@ -5,7 +5,7 @@ pub struct AppState {
     pub is_initialized: bool,
     pub user_name: String,
     pub create_date: String,
-    db_key: String,
+    password: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -16,15 +16,16 @@ pub struct CommonStore {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ProtectedStore {
-    secure_field: String,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct UserData {
     pub is_initialized: bool,
     pub user_name: String,
     pub create_date: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct SignUpResponse {
+    pub user_data: UserData,
+    pub secure_data: String,
 }
 
 impl AppState {
@@ -33,7 +34,7 @@ impl AppState {
             is_initialized: false,
             user_name: "".to_string(),
             create_date: "".to_string(),
-            db_key: "".to_string(),
+            password: "".to_string(),
         }
     }
 
@@ -48,15 +49,15 @@ impl AppState {
     //     self.db_key.clone()
     // }
 
-    pub fn set_db_key(&mut self, db_key: String) {
-        self.db_key = db_key;
+    pub fn set_password(&mut self, password: String) {
+        self.password = password;
     }
 
     pub fn drop_state(&mut self) {
         self.user_name = "".to_string();
         self.is_initialized = false;
         self.create_date = "".to_string();
-        self.db_key = "".to_string();
+        self.password = "".to_string();
     }
 }
 
@@ -66,14 +67,6 @@ impl CommonStore {
             is_initialized: user_data.is_initialized,
             user_name: user_data.user_name.clone(),
             create_date: user_data.create_date.clone(),
-        }
-    }
-}
-
-impl ProtectedStore {
-    pub fn new()  -> Self {
-        Self {
-            secure_field: "{}".to_string(),
         }
     }
 }
