@@ -7,11 +7,9 @@ import { AppProvider } from "@common/providers/app";
 import "./app.css";
 
 function App() {
-  const { data } = useSWR(
-    "/api/user",
-    () => promiseWithDelay(getAppState, 2000),
-    { suspense: true },
-  );
+  const { data } = useSWR("init", () => promiseWithDelay(getAppState, 2000), {
+    suspense: true,
+  });
 
   return (
     <AppProvider data={data}>
