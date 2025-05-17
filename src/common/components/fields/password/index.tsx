@@ -47,7 +47,7 @@ const FieldPassword = <TFormValues extends FieldValues>({
               <ErrorMessage name={name} message={fieldState.error?.message} />
             }
             isInvalid={!!fieldState.error?.message}
-            isDisabled={formState.isSubmitting}
+            isDisabled={formState.isSubmitting || inputProps?.isDisabled}
             labelPlacement="outside"
             type={isShow ? "text" : "password"}
             {...inputProps}

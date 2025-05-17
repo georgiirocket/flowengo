@@ -9,7 +9,7 @@ import FieldPassword from "@common/components/fields/password";
 import { Divider } from "@heroui/divider";
 import Input from "@common/components/fields/input";
 import FieldFormError from "@common/components/fields/error";
-import { Button } from "@heroui/react";
+import { Button } from "@heroui/button";
 import { appName } from "@common/constants";
 
 interface Props {
@@ -44,7 +44,7 @@ const AuthRoute: FC<Props> = ({ mode }) => {
       onSubmit={form.handleSubmit(onSubmit)}
       className="size-full grid place-content-center"
     >
-      <Card className="md:min-w-[400px]">
+      <Card className="min-w-[300px] md:min-w-[400px]">
         <CardHeader className="flex gap-1 items-center justify-between">
           <p className="flex gap-1 items-center">
             <img src="/icon-sq.svg" alt="logo" className="size-[20px]" />
@@ -91,7 +91,7 @@ const AuthRoute: FC<Props> = ({ mode }) => {
             className="ml-auto"
             size="sm"
           >
-            Submit
+            {mode === "sign-in" ? "Sign in" : "Create account"}
           </Button>
         </CardFooter>
       </Card>
