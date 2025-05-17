@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app.tsx";
 import HeroUiProvider from "@common/providers/hero-ui";
 import ThemeProvider from "@common/providers/theme";
 import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import { AppProvider } from "@common/providers/app";
+import CommonLoading from "@common/components/loading/common";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -18,9 +18,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               location.pathname = "/";
             }}
           >
-            <AppProvider>
+            <Suspense fallback={<CommonLoading />}>
               <App />
-            </AppProvider>
+            </Suspense>
           </ErrorBoundary>
         </BrowserRouter>
       </HeroUiProvider>
