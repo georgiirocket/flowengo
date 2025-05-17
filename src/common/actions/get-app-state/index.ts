@@ -7,7 +7,5 @@ export interface AppData {
 }
 
 export const getAppState = async (): Promise<AppData> => {
-  const x = await invoke<AppData>("get_app_state", {});
-  console.log(x);
-  return x;
+  return invoke<AppData>("get_app_state", {});
 };
