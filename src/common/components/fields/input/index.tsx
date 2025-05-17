@@ -6,6 +6,7 @@ import {
 } from "react-hook-form";
 import { Input } from "@heroui/react";
 import type { InputProps } from "@heroui/react";
+import ErrorMessage from "@common/components/fields/error-message";
 
 interface Props<TFormValues extends FieldValues> {
   name: Path<TFormValues>;
@@ -27,7 +28,9 @@ const FieldInput = <TFormValues extends FieldValues>({
           <Input
             {...inputProps}
             {...field}
-            errorMessage={fieldState.error?.message}
+            errorMessage={
+              <ErrorMessage name={name} message={fieldState.error?.message} />
+            }
             isInvalid={!!fieldState.error?.message}
             isDisabled={formState.isSubmitting}
             type="text"

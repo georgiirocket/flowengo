@@ -1,7 +1,6 @@
 import { copyClipboard } from "@common/helpers/copy-clipboard.ts";
 import { generatePassword } from "@common/helpers/genarate-password.ts";
 import { Input } from "@heroui/input";
-import { Tooltip } from "@heroui/tooltip";
 import { useState } from "react";
 import {
   type Control,
@@ -12,15 +11,15 @@ import {
 import { IoEyeOffOutline } from "react-icons/io5";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoCopy } from "react-icons/io5";
-import { MdGeneratingTokens } from "react-icons/md";
+import type { InputProps } from "@heroui/react";
+import ErrorMessage from "@common/components/fields/error-message";
 
 interface Props<TFormValues extends FieldValues> {
   name: Path<TFormValues>;
   control: Control<TFormValues>;
   isGenerate?: boolean;
   isCopy?: boolean;
-  label?: string;
-  placeholder?: string;
+  inputProps?: InputProps;
 }
 
 const FieldPassword = <TFormValues extends FieldValues>({
@@ -28,8 +27,7 @@ const FieldPassword = <TFormValues extends FieldValues>({
   control,
   isGenerate,
   isCopy,
-  label = "Password",
-  placeholder = "Enter your password",
+  inputProps,
 }: Props<TFormValues>) => {
   const [isShow, setIsShow] = useState(false);
 
@@ -45,13 +43,14 @@ const FieldPassword = <TFormValues extends FieldValues>({
             {...field}
             ref={field.ref}
             isRequired
-            errorMessage={fieldState.error?.message}
+            errorMessage={
+              <ErrorMessage name={name} message={fieldState.error?.message} />
+            }
             isInvalid={!!fieldState.error?.message}
             isDisabled={formState.isSubmitting}
-            label={label}
             labelPlacement="outside"
-            placeholder={placeholder}
             type={isShow ? "text" : "password"}
+            {...inputProps}
             description={
               isGenerate && (
                 // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
@@ -69,41 +68,24 @@ const FieldPassword = <TFormValues extends FieldValues>({
             endContent={
               <div className="flex items-center gap-1">
                 {isShow && (
-                  <Tooltip content="Hide password">
-                    <IoEyeOffOutline
-                      className="cursor-pointer size-[20px]"
-                      onClick={onToggle}
-                    />
-                  </Tooltip>
+                  <IoEyeOffOutline
+                    className="cursor-pointer size-[20px]"
+                    onClick={onToggle}
+                  />
                 )}
                 {!isShow && (
-                  <Tooltip content="Show password">
-                    <IoEyeOutline
-                      className="cursor-pointer size-[20px]"
-                      onClick={onToggle}
-                    />
-                  </Tooltip>
+                  <IoEyeOutline
+                    className="cursor-pointer size-[20px]"
+                    onClick={onToggle}
+                  />
                 )}
                 {isCopy && (
-                  <Tooltip content="Copy password">
-                    <IoCopy
-                      className="cursor-pointer size-[20px]"
-                      onClick={() => {
-                        void copyClipboard(field.value);
-                      }}
-                    />
-                  </Tooltip>
-                )}
-                {isGenerate && (
-                  <Tooltip content="Generate password">
-                    <MdGeneratingTokens
-                      className="cursor-pointer size-[20px]"
-                      onClick={() => {
-                        field.onChange(generatePassword());
-                        field.onBlur();
-                      }}
-                    />
-                  </Tooltip>
+                  <IoCopy
+                    className="cursor-pointer size-[20px]"
+                    onClick={() => {
+                      void copyClipboard(field.value);
+                    }}
+                  />
                 )}
               </div>
             }
