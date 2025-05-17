@@ -28,6 +28,12 @@ pub struct SignUpResponse {
     pub json_str: String,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct SignInResponse {
+    pub user_data: UserData,
+    pub json_str: String,
+}
+
 impl AppState {
     pub fn new() -> Self {
         Self {

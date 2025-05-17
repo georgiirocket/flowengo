@@ -18,6 +18,13 @@ impl SecureData {
     pub fn get_secure_field(&self) -> String {
         self.json_str.clone()
     }
+    
+    pub fn get_salt(&self) -> String {
+        self.salt.clone()
+    }
+    pub fn get_nonce(&self) -> String {
+        self.nonce.clone()
+    }
 
     pub async fn encrypt(password: &String, plaintext: String) -> Result<Self, String> {
         let salt = SaltString::generate(&mut OsRng);
@@ -47,7 +54,7 @@ impl SecureData {
         })
     }
 
-    pub fn decrypt(password: String, salt: String, nonce: String, plaintext: String) -> Result<String, String> {
+    pub fn decrypt(password: &String, salt: String, nonce: String, plaintext: String) -> Result<String, String> {
         let salt = SaltString::from_b64(&salt).map_err(|e| e.to_string())?;
         let argon2 = Argon2::default();
 

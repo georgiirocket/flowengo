@@ -27,7 +27,7 @@ async fn sign_up(app_handle: AppHandle, name: String, password: String) -> Resul
     let common_store = app_handle.store(constants::STORE_PATH_COMMON).map_err(|e| e.to_string())?;
     let protected_store = app_handle.store(constants::STORE_PATH_PROTECTED).map_err(|e| e.to_string())?;
 
-    let secure = crypto::SecureData::encrypt(&password, "{}".to_string()).await.expect("dc");
+    let secure = crypto::SecureData::encrypt(&password, "{}".to_string()).await.expect("Fails to encrypt data");
     let user_data = model::UserData::new(true, name, Utc::now().to_rfc3339());
 
     common_store.set("data", json!(model::CommonStore::new(&user_data)));
@@ -40,6 +40,25 @@ async fn sign_up(app_handle: AppHandle, name: String, password: String) -> Resul
     state.set_password(password);
 
     Ok(model::SignUpResponse {user_data, json_str: secure.get_secure_field() })
+}
+
+//Sign in
+#[tauri::command]
+async fn sign_in(app_handle: AppHandle, password: String) -> Result<model::SignInResponse, String> {
+    let protected_store = app_handle.store(constants::STORE_PATH_PROTECTED).map_err(|e| e.to_string())?;
+
+    let value = protected_store.get("data").expect("Failed to get data from protected store");
+    let secure: crypto::SecureData = from_value(value).expect("Failed to parse protected store");
+    let json_str = crypto::SecureData::decrypt(&password, secure.get_salt(), secure.get_nonce(), secure.get_secure_field()).map_err(|e| e.to_string())?;
+
+    let state = app_handle.state::<Mutex<model::AppState>>();
+    let mut state = state.lock().map_err(|e| e.to_string())?;
+
+    state.set_password(password);
+    
+    let user_data = model::UserData::new(state.is_initialized, state.user_name.clone(), state.create_date.clone());
+
+    Ok(model::SignInResponse {user_data, json_str })
 }
 
 //Drop all data
@@ -88,7 +107,7 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_app_state, sign_up, drop_all_data, get_random_string])
+        .invoke_handler(tauri::generate_handler![get_app_state, sign_up, sign_in, drop_all_data, get_random_string])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
