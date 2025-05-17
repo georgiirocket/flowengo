@@ -9,6 +9,14 @@ export default {
   ],
   theme: {
     extend: {},
+    screens: {
+      xs: "320px",
+      sm: "428px",
+      md: "744px",
+      lg: "1000px",
+      xl: "1440px",
+      "2xl": "1920px",
+    },
   },
   plugins: [heroui()],
 };
