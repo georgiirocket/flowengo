@@ -12,12 +12,12 @@ export interface Store extends AppStore {
   clear(): void;
 }
 
-export const createAppStore = () => {
+export const createAppStore = (initData: AppStore) => {
   return create<Store>()(
     immer((set) => ({
-      is_initialized: false,
-      user_name: "",
-      create_date: "",
+      is_initialized: initData.is_initialized,
+      user_name: initData.user_name,
+      create_date: initData.create_date,
 
       /**
        * Set app data

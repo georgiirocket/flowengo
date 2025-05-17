@@ -17,14 +17,16 @@ export interface IContext {
   store: StoreApi<TypeStore>;
 }
 
+type InitProps = { data: Parameters<typeof createStoreFn>[0] };
+
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 const Context = createContext<IContext>(undefined!);
 
-const Provider: FC<PropsWithChildren> = ({ children }) => {
+const Provider: FC<PropsWithChildren<InitProps>> = ({ children, data }) => {
   const storeRef = useRef<StoreApi<TypeStore>>(undefined);
 
   if (!storeRef.current) {
-    storeRef.current = createStoreFn();
+    storeRef.current = createStoreFn(data);
   }
 
   return (
