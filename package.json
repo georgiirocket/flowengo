@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@heroui/react": "^2.7.8",
+    "@hookform/resolvers": "^5.0.1",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
     "@tauri-apps/plugin-store": "^2.2.0",
@@ -23,9 +24,13 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^6.0.0",
+    "react-hook-form": "^7.56.4",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
     "swr": "^2.3.3",
+    "tailwind-merge": "^3.3.0",
     "vite-plugin-svgr": "^4.3.0",
+    "zod": "^3.24.4",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
