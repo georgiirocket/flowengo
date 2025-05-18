@@ -11,13 +11,18 @@ import Input from "@common/components/fields/input";
 import FieldFormError from "@common/components/fields/error";
 import { Button } from "@heroui/button";
 import { appName } from "@common/constants";
+import { signIn } from "@common/actions/sign-in";
+import { signUp } from "@common/actions/sign-up";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@common/constants/routes.ts";
 
 interface Props {
   mode: "sign-in" | "sign-up";
 }
 
 const AuthRoute: FC<Props> = ({ mode }) => {
-  const { user_name } = useAppCtxStore((state) => state);
+  const navigate = useNavigate();
+  const { user_name, setAppData } = useAppCtxStore((state) => state);
 
   /**
    * Form
@@ -36,7 +41,20 @@ const AuthRoute: FC<Props> = ({ mode }) => {
   ): Promise<void> => {
     form.clearErrors();
 
-    console.log(values);
+    const { error, data } = await (mode === "sign-in"
+      ? signIn(values.password)
+      : signUp(values));
+
+    if (error) {
+      form.setError("root", { message: error });
+
+      return;
+    }
+
+    if (data) {
+      setAppData(data.user_data);
+      navigate(ROUTES.dashboard);
+    }
   };
 
   return (

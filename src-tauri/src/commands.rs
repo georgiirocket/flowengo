@@ -25,7 +25,7 @@ pub async fn sign_up(app_handle: AppHandle, name: String, password: String) -> R
     let common_store = app_handle.store(constants::STORE_PATH_COMMON).map_err(|e| e.to_string())?;
     let protected_store = app_handle.store(constants::STORE_PATH_PROTECTED).map_err(|e| e.to_string())?;
 
-    let secure = crypto::SecureData::encrypt(&password, "{}".to_string()).await.expect("Fails to encrypt data");
+    let secure = crypto::SecureData::encrypt(&password, "{}".to_string()).await.map_err(|_e| "Failed to encrypt password")?;
     let user_data = model::UserData::new(true, name, Utc::now().to_rfc3339());
 
     common_store.set("data", json!(model::CommonStore::new(&user_data)));
@@ -37,7 +37,7 @@ pub async fn sign_up(app_handle: AppHandle, name: String, password: String) -> R
     state.fill_state(&user_data);
     state.set_password(password);
 
-    Ok(model::SignUpResponse {user_data, json_str: secure.get_secure_field() })
+    Ok(model::SignUpResponse {user_data, json_str: "{}".to_string() })
 }
 
 //Sign in
@@ -45,9 +45,10 @@ pub async fn sign_up(app_handle: AppHandle, name: String, password: String) -> R
 pub async fn sign_in(app_handle: AppHandle, password: String) -> Result<model::SignInResponse, String> {
     let protected_store = app_handle.store(constants::STORE_PATH_PROTECTED).map_err(|e| e.to_string())?;
 
-    let value = protected_store.get("data").expect("Failed to get data from protected store");
-    let secure: crypto::SecureData = from_value(value).expect("Failed to parse protected store");
-    let json_str = crypto::SecureData::decrypt(&password, secure.get_salt(), secure.get_nonce(), secure.get_secure_field()).map_err(|e| e.to_string())?;
+    let value = protected_store.get("data").ok_or("Protected store is empty")?;
+
+    let secure: crypto::SecureData = from_value(value).map_err(|_e| "Failed to parse protected store")?;
+    let json_str = crypto::SecureData::decrypt(&password, secure.get_salt(), secure.get_nonce(), secure.get_secure_field()).map_err(|_e| "Incorrect password")?;
 
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
