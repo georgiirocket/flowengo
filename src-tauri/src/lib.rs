@@ -2,8 +2,9 @@
 
 use serde_json::{from_value};
 use std::sync::Mutex;
-use tauri::{Manager};
+use tauri::{Emitter, Manager};
 use tauri_plugin_store::StoreExt;
+use tauri::menu::{MenuBuilder, MenuItemBuilder, SubmenuBuilder};
 
 mod model;
 mod helpers;
@@ -17,6 +18,29 @@ pub fn run() {
         .manage(Mutex::new(model::AppState::new()))
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
+            let app_handle = app.handle();
+
+            let quit_item = MenuItemBuilder::new("Quit Flowengo")
+                .id("quit")
+                .accelerator("CmdOrCtrl+Q")
+                .build(app)?;
+
+            let drop_item = MenuItemBuilder::new("Drop user data")
+                .id("drop")
+                .build(app)?;
+
+            let file_submenu = SubmenuBuilder::new(app_handle,"File")
+                .item(&quit_item)
+                .separator()
+                .item(&drop_item)
+                .build()?;
+
+            let menu = MenuBuilder::new(app)
+                .items(&[&file_submenu])
+                .build()?;
+
+            app.set_menu(menu)?;
+
             let common_store = app.store(constants::STORE_PATH_COMMON)?;
 
             if common_store.has("data") {
@@ -32,6 +56,18 @@ pub fn run() {
             }
 
             Ok(())
+        })
+        .on_menu_event(|app, event| {
+            match event.id().0.as_str() {
+                "quit" => {
+                    std::process::exit(0);
+                }
+
+                "drop" => {
+                    app.emit("drop-data", 1).unwrap();
+                }
+                _ => {}
+            }
         })
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![

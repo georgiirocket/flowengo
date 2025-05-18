@@ -22,7 +22,6 @@ export default {
       "2xl": "1920px",
     },
   },
-  darkMode: ["selector", '[data-theme="dark"]'],
   plugins: [
     heroui({
       themes: {
