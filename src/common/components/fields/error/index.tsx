@@ -15,7 +15,7 @@ const FieldFormError: FC<Props> = ({ message, className }) => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           transition={{ duration: 0.3 }}
-          className={twJoin("text-danger", className)}
+          className={twJoin("text-danger text-tiny", className)}
         >
           {message}
         </motion.p>
