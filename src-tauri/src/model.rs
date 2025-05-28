@@ -32,6 +32,16 @@ pub struct SignInResponse {
     pub user_data: UserData,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ProtectedDataResponse {
+    pub json_str: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct UpdateProtectedDataResponse {
+    pub is_updated: bool,
+}
+
 impl AppState {
     pub fn new() -> Self {
         Self {
@@ -51,6 +61,10 @@ impl AppState {
 
     pub fn set_password(&mut self, password: String) {
         self.password = password;
+    }
+
+    pub fn get_password(&self) -> String {
+        self.password.clone()
     }
 
     pub fn drop_state(&mut self) {

@@ -75,7 +75,9 @@ pub fn run() {
             commands::sign_up,
             commands::sign_in,
             commands::drop_all_data,
-            commands::get_random_string
+            commands::get_random_string,
+            commands::get_protected_data,
+            commands::update_protected_data,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
