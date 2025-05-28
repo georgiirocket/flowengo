@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import type { AppData } from "@common/actions/get-app-state";
 
-type Data = { user_data: AppData; json_str: string };
+type Data = { user_data: AppData };
 
 export interface SignInResponse {
   error: string;

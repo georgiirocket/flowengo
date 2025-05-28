@@ -37,7 +37,7 @@ pub async fn sign_up(app_handle: AppHandle, name: String, password: String) -> R
     state.fill_state(&user_data);
     state.set_password(password);
 
-    Ok(model::SignUpResponse {user_data, json_str: "{}".to_string() })
+    Ok(model::SignUpResponse {user_data })
 }
 
 //Sign in
@@ -48,7 +48,7 @@ pub async fn sign_in(app_handle: AppHandle, password: String) -> Result<model::S
     let value = protected_store.get("data").ok_or("Protected store is empty")?;
 
     let secure: crypto::SecureData = from_value(value).map_err(|_e| "Failed to parse protected store")?;
-    let json_str = crypto::SecureData::decrypt(&password, secure.get_salt(), secure.get_nonce(), secure.get_secure_field()).map_err(|_e| "Incorrect password")?;
+    crypto::SecureData::decrypt(&password, secure.get_salt(), secure.get_nonce(), secure.get_secure_field()).map_err(|_e| "Incorrect password")?;
 
     let state = app_handle.state::<Mutex<model::AppState>>();
     let mut state = state.lock().map_err(|e| e.to_string())?;
@@ -57,7 +57,7 @@ pub async fn sign_in(app_handle: AppHandle, password: String) -> Result<model::S
 
     let user_data = model::UserData::new(state.is_initialized, state.user_name.clone(), state.create_date.clone());
 
-    Ok(model::SignInResponse {user_data, json_str })
+    Ok(model::SignInResponse {user_data })
 }
 
 //Drop all data

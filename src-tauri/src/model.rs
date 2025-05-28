@@ -25,13 +25,11 @@ pub struct UserData {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SignUpResponse {
     pub user_data: UserData,
-    pub json_str: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SignInResponse {
     pub user_data: UserData,
-    pub json_str: String,
 }
 
 impl AppState {
@@ -50,10 +48,6 @@ impl AppState {
         self.is_initialized = user_data.is_initialized;
         self.create_date = user_data.create_date.clone();
     }
-
-    // pub fn get_db_key(&self) -> String {
-    //     self.db_key.clone()
-    // }
 
     pub fn set_password(&mut self, password: String) {
         self.password = password;
