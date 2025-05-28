@@ -64,10 +64,10 @@ pub async fn sign_in(app_handle: AppHandle, password: String) -> Result<model::S
 #[tauri::command]
 pub async fn get_protected_data(app_handle: AppHandle) -> Result<model::ProtectedDataResponse, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
-    let state = state.lock().map_err(|e| e.to_string())?;
-    let password = state.get_password();
-
-    drop(state);
+    let password = {
+        let state = state.lock().map_err(|e| e.to_string())?;
+        state.get_password()
+    };
 
     if password.len() == 0 {
         return Err("User is not signed in".to_string());
@@ -87,10 +87,10 @@ pub async fn get_protected_data(app_handle: AppHandle) -> Result<model::Protecte
 #[tauri::command]
 pub async fn update_protected_data(app_handle: AppHandle, json_str: String) -> Result<model::UpdateProtectedDataResponse, String> {
     let state = app_handle.state::<Mutex<model::AppState>>();
-    let state = state.lock().map_err(|e| e.to_string())?;
-    let password = state.get_password();
-
-    drop(state);
+    let password = {
+        let state = state.lock().map_err(|e| e.to_string())?;
+        state.get_password()
+    };
 
     if password.len() == 0 {
         return Err("User is not signed in".to_string());

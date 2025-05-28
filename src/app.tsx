@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { promiseWithDelay } from "@common/helpers/promise-with-delay.ts";
 import { getAppState } from "@common/actions/get-app-state";
 import { AppProvider } from "@common/providers/app";
-import CommonRoutes from "./common-routes";
+import CommonRoutes from "@src/routes";
 import "./app.css";
 
 const DropDataModal = lazy(() => import("@common/modals/drop-data"));
