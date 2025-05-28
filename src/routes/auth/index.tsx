@@ -52,7 +52,7 @@ const AuthRoute: FC<Props> = ({ mode }) => {
     }
 
     if (data) {
-      setAppData(data.user_data);
+      setAppData({ ...data.user_data, is_authenticated: true });
       navigate(ROUTES.dashboard);
     }
   };
