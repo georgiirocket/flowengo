@@ -13,6 +13,7 @@ const CommonRoutes: FC = () => {
     <Routes>
       {is_authenticated && (
         <Route
+          index
           path={ROUTES.dashboard}
           element={
             <Suspense fallback={<DashboardLoading />}>
