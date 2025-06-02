@@ -3,12 +3,8 @@ import { Card, CardBody } from "@heroui/card";
 import { motion } from "framer-motion";
 import ReactLogo from "@assets/icon-sq.svg?react";
 import { Divider } from "@heroui/divider";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@common/constants/routes.ts";
 
 const Footer: FC = () => {
-  const navigate = useNavigate();
-
   return (
     <motion.div
       className="w-full"
@@ -21,22 +17,7 @@ const Footer: FC = () => {
         <CardBody className="w-full grid grid-cols-[auto_auto_1fr_auto_auto] gap-2 items-center overflow-hidden">
           <ReactLogo className="size-[20px]" />
           <Divider orientation="vertical" />
-          <div>
-            <button
-              onClick={() => {
-                navigate(`${ROUTES.dashboard}/hello`);
-              }}
-            >
-              Hello
-            </button>
-            <button
-              onClick={() => {
-                navigate(`${ROUTES.dashboard}/test`);
-              }}
-            >
-              Test
-            </button>
-          </div>
+          <div>Full</div>
           <Divider orientation="vertical" />
           <div>Settings</div>
         </CardBody>
