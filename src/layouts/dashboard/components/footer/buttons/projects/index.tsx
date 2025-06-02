@@ -44,10 +44,14 @@ const ProjectsButton: FC = () => {
         onAction={onAction}
         aria-label="Static Actions"
         disallowEmptySelection
-        className="max-w-[300px]"
+        className="max-w-[300px] max-h-[90vh] overflow-y-auto"
       >
         {(item) => (
-          <DropdownItem startContent={item.startContent} key={item.key}>
+          <DropdownItem
+            startContent={item.startContent}
+            key={item.key}
+            className="max-w-[200px]"
+          >
             {item.label}
           </DropdownItem>
         )}
