@@ -1,23 +1,21 @@
 import type { FC } from "react";
-import useSWR from "swr";
-import { getProtectedData } from "@common/actions/get-protected-data";
-import { ProjectsProvider } from "@common/providers/projects";
+import { useProjectsCtxStore } from "@common/providers/projects";
+import { Navigate } from "react-router-dom";
+import { ROUTES } from "@common/constants/routes.ts";
+import { getLocalProjectId } from "@common/helpers/save-local-project-id.ts";
 
 const Dashboard: FC = () => {
-  const { data: result } = useSWR("protected", () => getProtectedData(), {
-    suspense: true,
-  });
+  const projectsData = useProjectsCtxStore((state) => state.projectsData);
+  const projectId = getLocalProjectId(projectsData);
 
-  if (result?.error || !result?.data) {
-    throw new Error(result.error);
+  if (projectId) {
+    return <Navigate to={`${ROUTES.dashboard}/${projectId}`} />;
   }
 
   return (
-    <ProjectsProvider data={result.data}>
-      <div>
-        <h1>Hello Dashboard</h1>
-      </div>
-    </ProjectsProvider>
+    <div>
+      <h1>Hello Dashboard</h1>
+    </div>
   );
 };
 
