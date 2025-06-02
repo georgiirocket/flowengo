@@ -7,7 +7,7 @@ import {
 import { emit } from "@tauri-apps/api/event";
 import { EVENTS } from "@common/events";
 
-export const dropDataItem = await MenuItem.new({
+const dropDataItem = await MenuItem.new({
   id: "drop-data",
   text: "Drop user data",
   action: () => {
@@ -15,7 +15,7 @@ export const dropDataItem = await MenuItem.new({
   },
 });
 
-export const quitItem = await MenuItem.new({
+const quitItem = await MenuItem.new({
   id: "quit",
   text: "Quit Frowengo",
   action: () => {
@@ -23,8 +23,17 @@ export const quitItem = await MenuItem.new({
   },
 });
 
+const newProjectItem = await MenuItem.new({
+  id: "new-project",
+  text: "New project",
+  action: () => {
+    console.log("new project");
+  },
+});
+
 export const fileSubmenu = await Submenu.new({
-  text: "File",
+  id: "flowengo",
+  text: "Flowengo",
   items: [
     dropDataItem,
     await PredefinedMenuItem.new({ item: "Separator" }),
@@ -32,8 +41,22 @@ export const fileSubmenu = await Submenu.new({
   ],
 });
 
+export const projectSubMenu = await Submenu.new({
+  id: "file",
+  text: "File",
+  items: [newProjectItem],
+});
+
+await projectSubMenu.setEnabled(false);
+
 export const menu = await Menu.new({
-  items: [fileSubmenu],
+  items: [fileSubmenu, projectSubMenu],
 });
 
 await menu.setAsAppMenu();
+
+export function enableProjectMenu(open: boolean) {
+  projectSubMenu.setEnabled(open).catch((e) => {
+    console.error("Enable project menu error:", e);
+  });
+}
