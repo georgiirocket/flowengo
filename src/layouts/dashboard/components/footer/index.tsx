@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Card, CardBody } from "@heroui/card";
 import { motion } from "framer-motion";
 import { Divider } from "@heroui/divider";
-import Settings from "./settings";
+import Settings from "./buttons/settings";
 import ProjectsButton from "./buttons/projects";
 import ProjectBase from "./base";
 import NewProjectButton from "./buttons/new";
