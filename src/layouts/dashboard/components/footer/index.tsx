@@ -3,6 +3,10 @@ import { Card, CardBody } from "@heroui/card";
 import { motion } from "framer-motion";
 import ReactLogo from "@assets/icon-sq.svg?react";
 import { Divider } from "@heroui/divider";
+import { Button } from "@heroui/button";
+import ScrollSlider from "@common/components/scroll-slider";
+import Settings from "./settings";
+import ProjectsButton from "./projects-button";
 
 const Footer: FC = () => {
   return (
@@ -14,12 +18,19 @@ const Footer: FC = () => {
       transition={{ duration: 0.5 }}
     >
       <Card className="w-full">
-        <CardBody className="w-full grid grid-cols-[auto_auto_1fr_auto_auto] gap-2 items-center overflow-hidden">
-          <ReactLogo className="size-[20px]" />
+        <CardBody className="w-full grid grid-cols-[auto_auto_1fr_auto_auto_auto] gap-2 items-center overflow-hidden">
+          <Button
+            startContent={<ReactLogo className="size-[20px]" />}
+            size="sm"
+            color="primary"
+          >
+            New
+          </Button>
           <Divider orientation="vertical" />
-          <div>Full</div>
+          <ScrollSlider className="!gap-1">sdc</ScrollSlider>
           <Divider orientation="vertical" />
-          <div>Settings</div>
+          <ProjectsButton />
+          <Settings />
         </CardBody>
       </Card>
     </motion.div>

@@ -1,0 +1,19 @@
+.scrollSlider {
+  display: grid;
+  grid-auto-flow: column;
+  overflow-x: auto;
+  gap: 15px;
+  scrollbar-width: none;
+  border-radius: 5px;
+  justify-content: flex-start;
+  user-select: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  button {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
