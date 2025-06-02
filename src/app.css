@@ -5,3 +5,34 @@
 body {
   overflow: hidden;
 }
+
+html {
+  animation: firstLoad 1s ease-in-out;
+}
+
+html[class~="light"] {
+  background: #fff;
+  background: linear-gradient(
+    171deg,
+    rgba(255, 255, 255, 1) 48%,
+    rgba(204, 62, 164, 1) 100%
+  );
+}
+
+html[class~="dark"] {
+  background: #000;
+  background: linear-gradient(
+    171deg,
+    rgba(0, 0, 0, 1) 48%,
+    rgba(204, 62, 164, 1) 100%
+  );
+}
+
+@keyframes firstLoad {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
