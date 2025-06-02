@@ -17,12 +17,12 @@ const Footer: FC = () => {
       transition={{ duration: 0.5 }}
     >
       <Card className="w-full">
-        <CardBody className="w-full grid grid-cols-[auto_auto_1fr_auto_auto_auto] gap-2 items-center overflow-hidden">
+        <CardBody className="w-full grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-2 items-center overflow-hidden">
           <NewProjectButton />
+          <ProjectsButton />
           <Divider orientation="vertical" />
           <ProjectBase />
           <Divider orientation="vertical" />
-          <ProjectsButton />
           <Settings />
         </CardBody>
       </Card>
