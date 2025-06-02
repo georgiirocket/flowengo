@@ -6,6 +6,7 @@ import ThemeProvider from "@common/providers/theme";
 import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import CommonLoading from "@common/components/loading/common";
+import "@common/tauri/native-menu";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
