@@ -16,24 +16,13 @@ export interface Store extends NewProjectsStore {
   setStepTitle(id: string, text: string): void;
   reorderSteps(stepIds: string[]): void;
   setColor(color: COLORS): void;
+  getProject(): NewProjectsStore["newProject"];
 }
 
 export const createNewProjectsStore = () => {
   return create<Store>()(
     immer<Store>((set, get) => ({
-      newProject: {
-        id: v4(),
-        title: "",
-        description: "",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        steps: [
-          { id: v4(), title: "Backlog", items: [] },
-          { id: v4(), title: "In progress", items: [] },
-          { id: v4(), title: "Done", items: [] },
-        ],
-        color: COLORS.default,
-      },
+      newProject: createInitProject(),
 
       setTitle(text) {
         set((state) => {
@@ -98,6 +87,41 @@ export const createNewProjectsStore = () => {
           state.newProject.color = color;
         });
       },
+
+      getProject() {
+        const { newProject } = get();
+
+        return {
+          ...newProject,
+          title: newProject.title.length ? newProject.title : "No name",
+          steps: newProject.steps.length
+            ? newProject.steps.map((step) => ({
+                ...step,
+                title: step.title.length ? step.title : "No name",
+              }))
+            : createInitSteps(),
+        };
+      },
     })),
   );
 };
+
+function createInitProject(): IProjects["projects"][0] {
+  return {
+    id: v4(),
+    title: "",
+    description: "",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    steps: createInitSteps(),
+    color: COLORS.default,
+  };
+}
+
+function createInitSteps(): IProjects["projects"][0]["steps"] {
+  return [
+    { id: v4(), title: "Backlog", items: [] },
+    { id: v4(), title: "In progress", items: [] },
+    { id: v4(), title: "Done", items: [] },
+  ];
+}
