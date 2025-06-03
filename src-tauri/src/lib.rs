@@ -48,6 +48,7 @@ pub fn run() {
             commands::get_random_string,
             commands::get_protected_data,
             commands::update_protected_data,
+            commands::log_out,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

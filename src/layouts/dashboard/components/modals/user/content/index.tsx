@@ -6,10 +6,23 @@ import { formatDateFromIso } from "@common/helpers/format-date-from-iso.ts";
 import { openRemoveDataModal } from "@common/hooks/use-drop-data-modal.ts";
 import { Divider } from "@heroui/divider";
 import ThemeComponent from "./theme";
+import { logOut } from "@common/actions/log-out";
 
 const Content: FC = () => {
-  const { user_name, create_date } = useAppCtxStore((state) => state);
+  const { user_name, create_date, clear } = useAppCtxStore((state) => state);
   const displayDate = formatDateFromIso(create_date, "dateWithTime");
+
+  const handleLogOut = async (): Promise<void> => {
+    const { error } = await logOut();
+
+    if (error) {
+      console.error("Log out failed: ", error);
+    }
+
+    clear();
+
+    window.location.href = "/";
+  };
 
   return (
     <>
@@ -31,7 +44,9 @@ const Content: FC = () => {
         >
           Remove account
         </Button>
-        <Button size="sm">Log out</Button>
+        <Button size="sm" onPress={handleLogOut}>
+          Log out
+        </Button>
       </ModalFooter>
     </>
   );

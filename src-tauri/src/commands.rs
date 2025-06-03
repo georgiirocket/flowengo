@@ -60,6 +60,18 @@ pub async fn sign_in(app_handle: AppHandle, password: String) -> Result<model::S
     Ok(model::SignInResponse {user_data})
 }
 
+//Log out
+#[tauri::command]
+pub async fn log_out(app_handle: AppHandle) -> Result<String, String> {
+    let state = app_handle.state::<Mutex<model::AppState>>();
+
+    let mut state = state.lock().map_err(|e| e.to_string())?;
+    
+    state.set_password(String::from(""));
+
+    Ok("Successfully logged out.".to_string())
+}
+
 //Get protected data
 #[tauri::command]
 pub async fn get_protected_data(app_handle: AppHandle) -> Result<model::ProtectedDataResponse, String> {
