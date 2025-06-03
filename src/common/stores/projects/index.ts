@@ -12,7 +12,7 @@ export interface Store extends ProjectsStore {}
 
 export const createProjectsStore = (initData: OutputBackend) => {
   return create<Store>()(
-    immer(() => ({
+    immer<Store>(() => ({
       projectsData: generateProjectData(initData),
     })),
   );

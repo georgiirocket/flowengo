@@ -17,7 +17,7 @@ export const createAppStore = (
   initData: Omit<AppStore, "is_authenticated">,
 ) => {
   return create<Store>()(
-    immer((set) => ({
+    immer<Store>((set) => ({
       is_authenticated: false,
       is_initialized: initData.is_initialized,
       user_name: initData.user_name,
