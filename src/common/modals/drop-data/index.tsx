@@ -36,10 +36,17 @@ const DropDataModal: FC = () => {
               <p>Are you sure you want to delete all data?</p>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="bordered" onPress={onRemoveData}>
+              <Button
+                size="sm"
+                color="danger"
+                variant="bordered"
+                onPress={onRemoveData}
+              >
                 Remove
               </Button>
-              <Button onPress={onClose}>Close</Button>
+              <Button size="sm" onPress={onClose}>
+                Close
+              </Button>
             </ModalFooter>
           </>
         )}

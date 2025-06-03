@@ -6,13 +6,12 @@ import {
 } from "@tauri-apps/api/menu";
 import { emit } from "@tauri-apps/api/event";
 import { EVENTS } from "@common/events";
+import { openRemoveDataModal } from "@common/hooks/use-drop-data-modal.ts";
 
 const dropDataItem = await MenuItem.new({
   id: "drop-data",
   text: "Drop user data",
-  action: () => {
-    void emit(EVENTS.dropData);
-  },
+  action: openRemoveDataModal,
 });
 
 const quitItem = await MenuItem.new({

@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import { listen, type UnlistenFn } from "@tauri-apps/api/event";
+import { emit, listen, type UnlistenFn } from "@tauri-apps/api/event";
 import { EVENTS } from "@common/events";
+
+export const openRemoveDataModal = () => {
+  emit(EVENTS.dropData).catch((e) => {
+    console.error("Open remove data modal: ", e);
+  });
+};
 
 export const useDropDataModal = () => {
   const [isOpen, setIsOpen] = useState(false);
