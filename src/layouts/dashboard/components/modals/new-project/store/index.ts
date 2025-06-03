@@ -23,7 +23,7 @@ export const createNewProjectsStore = () => {
     immer<Store>((set, get) => ({
       newProject: {
         id: v4(),
-        title: "New project",
+        title: "",
         description: "",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),

@@ -11,6 +11,7 @@ const Title: FC = () => {
       size="sm"
       label="Name"
       type="text"
+      placeholder="Enter project name"
       value={title}
       onValueChange={setTitle}
     />
