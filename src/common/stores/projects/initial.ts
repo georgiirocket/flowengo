@@ -8,6 +8,7 @@ export const projectsInitial: IProjects = {
     {
       id: "project-1",
       title: "My project",
+      description: "About my project",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       steps: [

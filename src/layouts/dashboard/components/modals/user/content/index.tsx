@@ -5,7 +5,7 @@ import { useAppCtxStore } from "@common/providers/app";
 import { formatDateFromIso } from "@common/helpers/format-date-from-iso.ts";
 import { openRemoveDataModal } from "@common/hooks/use-drop-data-modal.ts";
 import { Divider } from "@heroui/divider";
-import ThemeComponent from "./theme";
+import ThemeComponent from "./components/theme";
 import { logOut } from "@common/actions/log-out";
 
 const Content: FC = () => {

@@ -1,4 +1,4 @@
-import type { PROJECT_SCHEMA } from "./project-schema.ts";
+import type { PROJECT_SCHEMA } from "../project-schema.ts";
 
 export interface IStepItem {
   id: string;
@@ -18,6 +18,7 @@ export interface IProjectStep {
 export interface IProject {
   id: string;
   title: string;
+  description: string;
   steps: IProjectStep[];
   createdAt: string;
   updatedAt: string;
@@ -26,6 +27,6 @@ export interface IProject {
 
 export interface IProjectsData {
   version: string;
-  schema: PROJECT_SCHEMA.shema1;
+  schema: PROJECT_SCHEMA.schema1;
   projects: IProject[];
 }
