@@ -11,17 +11,36 @@
         const dark = window.matchMedia("(prefers-color-scheme: dark)");
 
         const update = () => {
-          if (
-                  localStorage.theme === "dark" ||
-                  (!localStorage.theme && dark.matches)
-          ) {
+          const theme = localStorage.getItem('theme')
+          const isSavedTheme = theme === 'dark' || theme === 'light'
 
+          console.log({theme, dark: dark.matches, isSavedTheme})
+
+          if(isSavedTheme && theme === 'dark') {
+            classList.remove("light");
             classList.add("dark");
-            style.colorScheme = "dark";
-          } else {
-            classList.remove("dark");
-            style.colorScheme = "light";
+            style.colorScheme = "dark"
+
+            return;
           }
+
+          if(isSavedTheme && theme === 'light') {
+            classList.add("light");
+            style.colorScheme = "light"
+
+            return;
+          }
+
+          if(dark.matches) {
+            classList.add("dark");
+            style.colorScheme = "dark"
+
+            return;
+          }
+
+
+          classList.add("light");
+          style.colorScheme = "light"
         };
         update();
       })();
