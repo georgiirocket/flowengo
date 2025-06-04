@@ -6,8 +6,10 @@ import ThemeProvider from "@common/providers/theme";
 import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import CommonLoading from "@common/components/loading/common";
-import "@common/tauri/native-menu";
+import { menu } from "@common/tauri/native-menu";
 import { FallbackRender } from "@common/components/fallback-render";
+
+void menu.init();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

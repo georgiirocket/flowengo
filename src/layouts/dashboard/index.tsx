@@ -4,7 +4,7 @@ import { getProtectedData } from "@common/actions/get-protected-data";
 import { ProjectsProvider } from "@common/providers/projects";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/footer";
-import { enableProjectMenu } from "@common/tauri/native-menu";
+import { menu } from "@common/tauri/native-menu";
 
 const UserModal = lazy(() => import("./components/modals/user"));
 const NewProjectModal = lazy(() => import("./components/modals/new-project"));
@@ -20,10 +20,10 @@ const DashboardLayout: FC = () => {
   }
 
   useEffect(() => {
-    enableProjectMenu(true);
+    menu.enableProjectMenu(true);
 
     return () => {
-      enableProjectMenu(false);
+      menu.enableProjectMenu(false);
     };
   }, []);
 
