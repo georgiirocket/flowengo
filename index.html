@@ -14,8 +14,6 @@
           const theme = localStorage.getItem('theme')
           const isSavedTheme = theme === 'dark' || theme === 'light'
 
-          console.log({theme, dark: dark.matches, isSavedTheme})
-
           if(isSavedTheme && theme === 'dark') {
             classList.remove("light");
             classList.add("dark");

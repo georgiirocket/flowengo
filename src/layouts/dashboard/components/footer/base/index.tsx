@@ -1,10 +1,11 @@
-import type { FC } from "react";
+import { type FC, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useProjectsCtxStore } from "@common/providers/projects";
 import Marker from "@common/components/marker";
 import { IoIosSettings } from "react-icons/io";
 import { Button } from "@heroui/button";
+import { openEditProjectModal } from "@layouts/dashboard/components/modals/hooks/use-edit-project.ts";
 
 const ProjectBase: FC = () => {
   const projectsData = useProjectsCtxStore((state) => state.projectsData);
@@ -12,6 +13,14 @@ const ProjectBase: FC = () => {
   const project = projectsData.projects.find(
     (project) => project.id === params.id,
   );
+
+  const handleEdit = useCallback(() => {
+    if (!project) {
+      return;
+    }
+
+    openEditProjectModal(project);
+  }, [project]);
 
   if (!params.id || !project) {
     return <div />;
@@ -27,7 +36,7 @@ const ProjectBase: FC = () => {
         transition={{ duration: 0.5 }}
         className="grid gap-2 grid-cols-[auto_auto_1fr] items-center w-full overflow-hidden"
       >
-        <Button isIconOnly size="sm">
+        <Button isIconOnly size="sm" onPress={handleEdit}>
           <IoIosSettings size={20} />
         </Button>
         <Marker color={project.color} />

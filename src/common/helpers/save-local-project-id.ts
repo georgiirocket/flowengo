@@ -1,6 +1,12 @@
 import type { IProjects } from "@common/stores/projects/types.ts";
 
-export const saveLocalProjectId = (id: string) => {
+export const saveLocalProjectId = (id: string | null) => {
+  if (!id) {
+    window.localStorage.removeItem("project_id");
+
+    return;
+  }
+
   window.localStorage.setItem("project_id", id);
 };
 

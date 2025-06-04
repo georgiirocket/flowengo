@@ -8,6 +8,7 @@ import { enableProjectMenu } from "@common/tauri/native-menu";
 
 const UserModal = lazy(() => import("./components/modals/user"));
 const NewProjectModal = lazy(() => import("./components/modals/new-project"));
+const EditProjectModal = lazy(() => import("./components/modals/edit-project"));
 
 const DashboardLayout: FC = () => {
   const { data: result } = useSWR("protected", getProtectedData, {
@@ -33,6 +34,7 @@ const DashboardLayout: FC = () => {
         <Footer />
         <UserModal />
         <NewProjectModal />
+        <EditProjectModal />
       </div>
     </ProjectsProvider>
   );

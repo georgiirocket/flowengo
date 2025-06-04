@@ -8,6 +8,8 @@ const Dashboard: FC = () => {
   const projectsData = useProjectsCtxStore((state) => state.projectsData);
   const projectId = getLocalProjectId(projectsData);
 
+  console.log({ projectId });
+
   if (projectId) {
     return <Navigate to={`${ROUTES.dashboard}/${projectId}`} />;
   }

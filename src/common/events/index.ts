@@ -3,4 +3,5 @@ export enum EVENTS {
   quitApp = "quit-app",
   userModal = "user-modal",
   newProject = "new-project",
+  editProject = "edit-project",
 }
