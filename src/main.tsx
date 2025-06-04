@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import CommonLoading from "@common/components/loading/common";
 import "@common/tauri/native-menu";
-import { FallbackRender } from "@common/components/fallbackRender";
+import { FallbackRender } from "@common/components/fallback-render";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
