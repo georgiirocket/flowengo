@@ -7,18 +7,14 @@ import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import CommonLoading from "@common/components/loading/common";
 import "@common/tauri/native-menu";
+import { FallbackRender } from "@common/components/fallbackRender";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider>
       <HeroUiProvider>
         <BrowserRouter>
-          <ErrorBoundary
-            fallback={<div>Something went wrong.</div>}
-            onReset={() => {
-              location.pathname = "/";
-            }}
-          >
+          <ErrorBoundary FallbackComponent={FallbackRender}>
             <Suspense fallback={<CommonLoading />}>
               <App />
             </Suspense>
