@@ -2,12 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  overflow: hidden;
-}
-
 html {
   animation: firstLoad 1s ease-in-out;
+  overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
+}
+
+body {
+  overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
 }
 
 html[class~="light"] {

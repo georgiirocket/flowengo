@@ -11,6 +11,7 @@ import DashboardLayout from "@layouts/dashboard";
 import Dashboard from "@routes/dashboard";
 import Project from "@routes/project";
 import "./app.css";
+import { useMainResize } from "@common/hooks/use-main-resize.ts";
 
 const DropDataModal = lazy(() => import("@common/modals/drop-data"));
 
@@ -19,9 +20,11 @@ function App() {
     suspense: true,
   });
 
+  const { mainRef } = useMainResize();
+
   return (
     <AppProvider data={data}>
-      <main className="w-full h-dvh">
+      <main ref={mainRef} className="w-full h-[100vh]">
         <Routes>
           <Route
             path={ROUTES.dashboard}
