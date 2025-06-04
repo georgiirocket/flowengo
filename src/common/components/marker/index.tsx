@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { COLORS } from "@common/constants/colors";
+import { Button } from "@heroui/button";
 
 interface Props {
   color?: string;
@@ -7,10 +8,12 @@ interface Props {
 
 const Marker: FC<Props> = ({ color }) => {
   return (
-    <div
-      className="size-[15px] rounded-full border-1"
-      style={{ backgroundColor: color ?? COLORS.default }}
-    />
+    <Button radius="full" size="sm" isIconOnly variant="shadow">
+      <div
+        className="size-[15px] rounded-full"
+        style={{ backgroundColor: color ?? COLORS.default }}
+      />
+    </Button>
   );
 };
 
