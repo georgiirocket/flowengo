@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { emit, listen, type UnlistenFn } from "@tauri-apps/api/event";
+import { emit, listen } from "@tauri-apps/api/event";
 import { EVENTS } from "@common/events";
 import type { IProjects } from "@common/stores/projects/types.ts";
 
@@ -29,19 +29,13 @@ export const useEditProjectModal = () => {
   };
 
   useEffect(() => {
-    let unlistenFn: UnlistenFn | null = null;
-
-    listen<Payload>(EVENTS.editProject, (event) => {
+    const unlisten = listen<Payload>(EVENTS.editProject, (event) => {
       setPayload(event.payload);
       setIsOpen(true);
-    })
-      .then((fn) => {
-        unlistenFn = fn;
-      })
-      .catch(console.error);
+    });
 
     return () => {
-      unlistenFn?.();
+      unlisten.then((fn) => fn());
     };
   }, []);
 
