@@ -1,6 +1,5 @@
 import type { FC } from "react";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { Chip } from "@heroui/react";
+import { Button } from "@heroui/button";
 
 interface Props {
   projectId: string;
@@ -14,14 +13,9 @@ const Header: FC<Props> = ({ title }) => {
       <span className="w-full uppercase text-ellipsis overflow-hidden text-nowrap">
         {title}
       </span>
-      <Chip
-        radius="sm"
-        size="sm"
-        classNames={{ base: "!w-full cursor-pointer", content: "!w-full" }}
-        startContent={<IoIosAddCircleOutline size={10} />}
-      >
+      <Button radius="sm" size="sm" className="h-full">
         Add More
-      </Chip>
+      </Button>
     </div>
   );
 };
