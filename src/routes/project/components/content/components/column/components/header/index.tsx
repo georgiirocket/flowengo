@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { CardHeader } from "@heroui/card";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Chip } from "@heroui/react";
 
@@ -11,7 +10,7 @@ interface Props {
 
 const Header: FC<Props> = ({ title }) => {
   return (
-    <CardHeader className="w-full flex gap-1 pb-0 items-start overflow-hidden">
+    <div className="w-full h-[24px] flex gap-1 pb-0 items-start overflow-hidden select-none">
       <span className="w-full uppercase text-ellipsis overflow-hidden text-nowrap">
         {title}
       </span>
@@ -23,7 +22,7 @@ const Header: FC<Props> = ({ title }) => {
       >
         Add More
       </Chip>
-    </CardHeader>
+    </div>
   );
 };
 

@@ -41,3 +41,15 @@ html[class~="dark"] {
     opacity: 1;
   }
 }
+
+@layer utilities {
+  .scroll-hidden {
+    scrollbar-width: none;
+
+    /* width */
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+}

@@ -15,7 +15,7 @@ const Project: FC = () => {
     <AnimatePresence mode="wait">
       <motion.div
         key={params.id}
-        className="w-full h-full"
+        className="w-full h-full overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
