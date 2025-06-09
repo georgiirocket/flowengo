@@ -20,3 +20,9 @@ Generate icons
 ```bash
 npm run tauri icon
 ```
+
+Build project
+
+```bash
+npm run tauri build
+```
