@@ -9,6 +9,9 @@ import { menu } from "@common/tauri/native-menu";
 const UserModal = lazy(() => import("./components/modals/user"));
 const NewProjectModal = lazy(() => import("./components/modals/new-project"));
 const EditProjectModal = lazy(() => import("./components/modals/edit-project"));
+const NewStepItemModal = lazy(
+  () => import("./components/modals/new-step-item"),
+);
 
 const DashboardLayout: FC = () => {
   const { data: result } = useSWR("protected", getProtectedData, {
@@ -35,6 +38,7 @@ const DashboardLayout: FC = () => {
         <UserModal />
         <NewProjectModal />
         <EditProjectModal />
+        <NewStepItemModal />
       </div>
     </ProjectsProvider>
   );

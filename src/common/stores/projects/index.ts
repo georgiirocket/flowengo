@@ -6,6 +6,37 @@ import { generateProjectData } from "./generate.ts";
 import { v4 } from "uuid";
 import { saveLocalProjectId } from "@common/helpers/save-local-project-id.ts";
 
+interface ReorderItemsData {
+  projectId: string;
+  stepId: string;
+  items: IProjects["projects"][0]["steps"][0]["items"];
+}
+
+interface MoveItemToStepData {
+  projectId: string;
+  oldStepId: string;
+  newStepId: string;
+  itemId: string;
+}
+
+interface NewStepItemData {
+  projectId: string;
+  stepId: string;
+  item: IProjects["projects"][0]["steps"][0]["items"][0];
+}
+
+interface EditStepItemData {
+  projectId: string;
+  stepId: string;
+  item: IProjects["projects"][0]["steps"][0]["items"][0];
+}
+
+interface RemoveStepItemData {
+  projectId: string;
+  stepId: string;
+  itemId: string;
+}
+
 export interface ProjectsStore {
   projectsData: IProjects;
 }
@@ -15,17 +46,11 @@ export interface Store extends ProjectsStore {
   updateProject(project: IProjects["projects"][0]): void;
   removeProject(projectId: string): void;
   getFirstProjectId(): string | null;
-  reOrderItems(
-    projectId: string,
-    stepId: string,
-    items: IProjects["projects"][0]["steps"][0]["items"],
-  ): void;
-  moveItemToStep(
-    projectId: string,
-    oldStepId: string,
-    newStepId: string,
-    itemId: string,
-  ): void;
+  reOrderItems(data: ReorderItemsData): void;
+  moveItemToStep(data: MoveItemToStepData): void;
+  createNewStepItem(data: NewStepItemData): void;
+  editStepItem(data: EditStepItemData): void;
+  removeStepItem(data: RemoveStepItemData): void;
 }
 
 export const createProjectsStore = (initData: OutputBackend) => {
@@ -78,7 +103,9 @@ export const createProjectsStore = (initData: OutputBackend) => {
         return firstProject.id;
       },
 
-      reOrderItems(projectId, stepId, items) {
+      reOrderItems(data) {
+        const { projectId, stepId, items } = data;
+
         set((state) => {
           const project = state.projectsData.projects.find(
             (p) => p.id === projectId,
@@ -95,7 +122,9 @@ export const createProjectsStore = (initData: OutputBackend) => {
         });
       },
 
-      moveItemToStep(projectId, oldStepId, newStepId, itemId) {
+      moveItemToStep(data) {
+        const { projectId, oldStepId, newStepId, itemId } = data;
+
         const { projectsData } = get();
         const project = projectsData.projects.find((p) => p.id === projectId);
 
@@ -137,6 +166,70 @@ export const createProjectsStore = (initData: OutputBackend) => {
             });
 
             state.projectsData.version = v4();
+          }
+        });
+      },
+
+      createNewStepItem(data) {
+        const { projectId, stepId, item } = data;
+
+        set((state) => {
+          const project = state.projectsData.projects.find(
+            (p) => p.id === projectId,
+          );
+
+          if (project) {
+            const step = project.steps.find((s) => s.id === stepId);
+
+            if (step) {
+              step.items.unshift(item);
+              state.projectsData.version = v4();
+            }
+          }
+        });
+      },
+
+      editStepItem(data) {
+        const { projectId, stepId, item } = data;
+
+        set((state) => {
+          const project = state.projectsData.projects.find(
+            (p) => p.id === projectId,
+          );
+
+          if (project) {
+            const step = project.steps.find((s) => s.id === stepId);
+
+            if (step) {
+              step.items = step.items.map((i) => {
+                if (i.id === item.id) {
+                  return item;
+                }
+
+                return i;
+              });
+
+              state.projectsData.version = v4();
+            }
+          }
+        });
+      },
+
+      removeStepItem(data) {
+        const { projectId, stepId, itemId } = data;
+
+        set((state) => {
+          const project = state.projectsData.projects.find(
+            (p) => p.id === projectId,
+          );
+
+          if (project) {
+            const step = project.steps.find((s) => s.id === stepId);
+
+            if (step) {
+              step.items = step.items.filter((i) => i.id !== itemId);
+              state.projectsData.version = v4();
+            }
           }
         });
       },

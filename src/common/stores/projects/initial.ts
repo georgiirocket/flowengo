@@ -1,5 +1,6 @@
 import type { IProjects } from "./types.ts";
 import { PROJECT_SCHEMA } from "./project-schema.ts";
+import { COLORS } from "@common/constants/colors";
 
 export const projectsInitial: IProjects = {
   version: "1.0.0",
@@ -22,6 +23,7 @@ export const projectsInitial: IProjects = {
               description: "Check the API documentation",
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
+              color: COLORS.zic,
             },
           ],
         },

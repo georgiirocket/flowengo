@@ -40,7 +40,11 @@ export const useDragHandler = (project: IProjects["projects"][0]) => {
     const oldIdx = items.findIndex((i) => i.id === e.active.id.toString());
     const newIdx = items.findIndex((i) => i.id === over.id.toString());
 
-    reOrderItems(id, step.id, arrayMove(items, oldIdx, newIdx));
+    reOrderItems({
+      projectId: id,
+      stepId: step.id,
+      items: arrayMove(items, oldIdx, newIdx),
+    });
   };
 
   const dragOverHandler = (e: DragOverEvent) => {
@@ -66,12 +70,12 @@ export const useDragHandler = (project: IProjects["projects"][0]) => {
         return;
       }
 
-      moveItemToStep(
-        id,
-        initialContainer,
-        e.over.id.toString(),
-        e.active.id.toString(),
-      );
+      moveItemToStep({
+        projectId: id,
+        itemId: e.active.id.toString(),
+        newStepId: e.over.id.toString(),
+        oldStepId: initialContainer,
+      });
 
       return;
     }
@@ -81,12 +85,13 @@ export const useDragHandler = (project: IProjects["projects"][0]) => {
     }
 
     if (initialContainer !== targetContainer) {
-      moveItemToStep(
-        id,
-        initialContainer,
-        targetContainer,
-        e.active.id.toString(),
-      );
+      moveItemToStep({
+        projectId: id,
+        itemId: e.active.id.toString(),
+        newStepId: targetContainer,
+        oldStepId: initialContainer,
+      });
+
       return;
     }
   };

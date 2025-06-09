@@ -4,4 +4,7 @@ export enum EVENTS {
   userModal = "user-modal",
   newProject = "new-project",
   editProject = "edit-project",
+  newStepItem = "new-step-item",
+  editStepItem = "edit-step-item",
+  viewStepItem = "edit-step-item",
 }
