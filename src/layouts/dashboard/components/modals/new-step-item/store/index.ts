@@ -4,6 +4,7 @@ import type { IProjects } from "@common/stores/projects/types.ts";
 import { v4 } from "uuid";
 import { COLORS } from "@common/constants/colors";
 import type { NewStepPayload } from "../../hooks/use-new-step-item.ts";
+import type { JSONContent } from "@tiptap/react";
 
 export interface NewStepStore extends NewStepPayload {
   item: IProjects["projects"][0]["steps"][0]["items"][0];
@@ -11,7 +12,7 @@ export interface NewStepStore extends NewStepPayload {
 
 export interface Store extends NewStepStore {
   setTitle(text: string): void;
-  setDescription(text: string): void;
+  setDescription(text: JSONContent): void;
   setColor(color: COLORS): void;
   getStoreResult(): NewStepStore;
 }
@@ -24,7 +25,7 @@ export const createNewStepItemStore = (init: NewStepPayload) => {
       item: {
         id: v4(),
         title: "",
-        description: "",
+        description: {},
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         color: COLORS.zic,
@@ -36,9 +37,9 @@ export const createNewStepItemStore = (init: NewStepPayload) => {
         });
       },
 
-      setDescription(text) {
+      setDescription(json) {
         set((state) => {
-          state.item.description = text;
+          state.item.description = json;
         });
       },
 

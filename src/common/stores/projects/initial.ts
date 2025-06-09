@@ -20,7 +20,7 @@ export const projectsInitial: IProjects = {
             {
               id: "item-1",
               title: "Integration with API",
-              description: "Check the API documentation",
+              description: {},
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
               color: COLORS.zic,

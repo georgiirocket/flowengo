@@ -1,9 +1,10 @@
 import type { PROJECT_SCHEMA } from "../project-schema.ts";
+import type { JSONContent } from "@tiptap/react";
 
 export interface IStepItem {
   id: string;
   title: string;
-  description: string;
+  description: JSONContent;
   createdAt: string;
   updatedAt: string;
   color?: string;

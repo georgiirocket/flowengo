@@ -1,0 +1,51 @@
+/* Basic editor styles */
+.tiptap {
+  min-height: 200px;
+  padding: 10px;
+  background-color: hsl(var(--heroui-default) / 0.4);
+  border-radius: var(--heroui-radius-small);
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  p {
+    font-size: var(--heroui-font-size-small);
+  }
+
+  /* Heading styles */
+  h1,
+  h2,
+  h3 {
+    line-height: 1.1;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid
+      hsl(
+        var(--heroui-divider) /
+        var(--heroui-divider-opacity, var(--tw-bg-opacity))
+      );
+    margin: 1rem 0;
+  }
+}
