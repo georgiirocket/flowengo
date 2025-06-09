@@ -1,34 +1,26 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import type { IProjects } from "@common/stores/projects/types.ts";
-import { v4 } from "uuid";
-import { COLORS } from "@common/constants/colors";
-import type { NewStepPayload } from "../../hooks/use-new-step-item.ts";
+import type { COLORS } from "@common/constants/colors";
+import type { EditStepPayload } from "@layouts/dashboard/components/modals/hooks/use-edit-step-item.ts";
 
-export interface NewStepStore extends NewStepPayload {
+export interface EditStepStore extends EditStepPayload {
   item: IProjects["projects"][0]["steps"][0]["items"][0];
 }
 
-export interface Store extends NewStepStore {
+export interface Store extends EditStepStore {
   setTitle(text: string): void;
   setDescription(text: string): void;
   setColor(color: COLORS): void;
-  getStoreResult(): Pick<NewStepStore, "projectId" | "stepId" | "item">;
+  getStoreResult(): Pick<EditStepStore, "projectId" | "stepId" | "item">;
 }
 
-export const createNewStepItemStore = (init: NewStepPayload) => {
+export const createEditStepItemStore = (init: EditStepPayload) => {
   return create<Store>()(
     immer<Store>((set, get) => ({
       projectId: init.projectId,
       stepId: init.stepId,
-      item: {
-        id: v4(),
-        title: "",
-        description: "",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        color: COLORS.zic,
-      },
+      item: init.item,
 
       setTitle(text) {
         set((state) => {
@@ -57,7 +49,6 @@ export const createNewStepItemStore = (init: NewStepPayload) => {
           item: {
             ...item,
             title: item.title.length ? item.title : "New task",
-            createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           },
         };

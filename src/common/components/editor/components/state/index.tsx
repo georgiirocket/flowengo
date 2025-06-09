@@ -1,8 +1,8 @@
 import { type FC, useEffect } from "react";
-import { type Editor, type JSONContent, useCurrentEditor } from "@tiptap/react";
+import { type Editor, useCurrentEditor } from "@tiptap/react";
 
 interface Props {
-  onValueChange(n: JSONContent): void;
+  onValueChange(n: string): void;
 }
 
 const State: FC<Props> = ({ onValueChange }) => {
@@ -11,7 +11,7 @@ const State: FC<Props> = ({ onValueChange }) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const updateFn = ({ editor }: { editor: Editor }) => {
-      onValueChange(editor.getJSON());
+      onValueChange(editor.getHTML());
     };
 
     editor?.on("update", updateFn);

@@ -26,7 +26,7 @@ const Column: FC<Props> = ({ step, projectId }) => {
           className="w-full overflow-y-auto overflow-x-hidden scroll-hidden"
         >
           {items.map((item) => (
-            <Item key={item.id} projectId={projectId} item={item} />
+            <Item key={item.id} projectId={projectId} stepId={id} item={item} />
           ))}
         </div>
       </SortableContext>

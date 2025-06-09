@@ -1,10 +1,12 @@
 import type { FC } from "react";
-import { useNewStepItemCtxStore } from "../../../provider";
+import { useEditStepItemCtxStore } from "../../../provider";
 import Editor from "@common/components/editor";
 
 const Description: FC = () => {
-  const description = useNewStepItemCtxStore((state) => state.item.description);
-  const setDescription = useNewStepItemCtxStore(
+  const description = useEditStepItemCtxStore(
+    (state) => state.item.description,
+  );
+  const setDescription = useEditStepItemCtxStore(
     (state) => state.setDescription,
   );
 

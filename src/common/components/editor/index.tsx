@@ -1,4 +1,4 @@
-import { EditorProvider, type JSONContent } from "@tiptap/react";
+import { EditorProvider } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import type { FC } from "react";
 import { Color } from "@tiptap/extension-color";
@@ -27,8 +27,8 @@ const extensions = [
 ];
 
 interface Props {
-  value: JSONContent;
-  onValueChange(n: JSONContent): void;
+  value: string;
+  onValueChange(n: string): void;
   isView?: boolean;
 }
 

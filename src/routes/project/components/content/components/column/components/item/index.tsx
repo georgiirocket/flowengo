@@ -11,13 +11,15 @@ import Marker from "@common/components/marker";
 import { MdOutlineUpdate } from "react-icons/md";
 import { formatDateFromIso } from "@common/helpers/format-date-from-iso.ts";
 import { Divider } from "@heroui/divider";
+import { openEditStepItemModal } from "@layouts/dashboard/components/modals/hooks/use-edit-step-item.ts";
 
 interface Props {
   projectId: string;
+  stepId: string;
   item: IProjects["projects"][0]["steps"][0]["items"][0];
 }
 
-const Item: FC<Props> = ({ item }) => {
+const Item: FC<Props> = ({ item, projectId, stepId }) => {
   const { id, title, color, updatedAt } = item;
   const displayUpdateAt = formatDateFromIso(updatedAt, "dateWithTime");
 
@@ -50,7 +52,12 @@ const Item: FC<Props> = ({ item }) => {
         </CardBody>
         <CardFooter className="justify-end gap-1">
           <Marker color={color} className="mr-auto" />
-          <Button radius="full" size="sm" startContent={<CiEdit size={15} />}>
+          <Button
+            radius="full"
+            size="sm"
+            startContent={<CiEdit size={15} />}
+            onPress={() => openEditStepItemModal({ projectId, stepId, item })}
+          >
             Edit
           </Button>
           <Button
