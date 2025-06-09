@@ -28,7 +28,7 @@ const extensions = [
 
 interface Props {
   value: string;
-  onValueChange(n: string): void;
+  onValueChange?(n: string): void;
   isView?: boolean;
 }
 

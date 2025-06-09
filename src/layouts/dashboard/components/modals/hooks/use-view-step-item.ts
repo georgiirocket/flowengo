@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { emit, listen } from "@tauri-apps/api/event";
 import { EVENTS } from "@common/events";
+import type { IProjects } from "@common/stores/projects/types.ts";
 
 export type ViewStepPayload = {
   projectId: string;
   stepId: string;
+  item: IProjects["projects"][0]["steps"][0]["items"][0];
 };
 
 export const openViewStepItemModal = (payload: ViewStepPayload): void => {

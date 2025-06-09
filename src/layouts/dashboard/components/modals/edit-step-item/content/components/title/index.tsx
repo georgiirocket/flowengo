@@ -1,13 +1,13 @@
 import type { FC } from "react";
 import { useEditStepItemCtxStore } from "../../../provider";
-import { Textarea } from "@heroui/input";
+import { Input } from "@heroui/input";
 
 const Title: FC = () => {
   const title = useEditStepItemCtxStore((state) => state.item.title);
   const setTitle = useEditStepItemCtxStore((state) => state.setTitle);
 
   return (
-    <Textarea
+    <Input
       size="sm"
       label="Title"
       type="text"

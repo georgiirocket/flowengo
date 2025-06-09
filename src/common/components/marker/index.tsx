@@ -1,13 +1,15 @@
 import type { FC } from "react";
 import { COLORS } from "@common/constants/colors";
 import { Button } from "@heroui/button";
+import type { ButtonProps } from "@heroui/react";
 
 interface Props {
   color?: string;
   className?: string;
+  onPress?: ButtonProps["onPress"];
 }
 
-const Marker: FC<Props> = ({ color, className }) => {
+const Marker: FC<Props> = ({ color, className, onPress }) => {
   return (
     <Button
       radius="full"
@@ -15,6 +17,7 @@ const Marker: FC<Props> = ({ color, className }) => {
       isIconOnly
       variant="shadow"
       className={className}
+      onPress={onPress}
     >
       <div
         className="size-[15px] rounded-full"

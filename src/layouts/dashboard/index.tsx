@@ -16,6 +16,10 @@ const EditStepItemModal = lazy(
   () => import("./components/modals/edit-step-item"),
 );
 
+const ViewStepItemModal = lazy(
+  () => import("./components/modals/view-step-item"),
+);
+
 const DashboardLayout: FC = () => {
   const { data: result } = useSWR("protected", getProtectedData, {
     suspense: true,
@@ -43,6 +47,7 @@ const DashboardLayout: FC = () => {
         <EditProjectModal />
         <NewStepItemModal />
         <EditStepItemModal />
+        <ViewStepItemModal />
       </div>
     </ProjectsProvider>
   );

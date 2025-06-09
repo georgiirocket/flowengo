@@ -12,6 +12,7 @@ import { MdOutlineUpdate } from "react-icons/md";
 import { formatDateFromIso } from "@common/helpers/format-date-from-iso.ts";
 import { Divider } from "@heroui/divider";
 import { openEditStepItemModal } from "@layouts/dashboard/components/modals/hooks/use-edit-step-item.ts";
+import { openViewStepItemModal } from "@layouts/dashboard/components/modals/hooks/use-view-step-item.ts";
 
 interface Props {
   projectId: string;
@@ -35,15 +36,15 @@ const Item: FC<Props> = ({ item, projectId, stepId }) => {
         transform: CSS.Transform.toString(transform),
         transition: transition,
       }}
-      className="w-full cursor-grab [&:not(:last-child)]:mb-2"
+      className="w-full h-[143px] cursor-grab [&:not(:last-child)]:mb-2"
     >
       <Card
         shadow="none"
-        className="w-full scroll-hidden border-1 select-none"
+        className="w-full h-full scroll-hidden border-1 select-none"
         style={{ borderColor: color }}
       >
         <CardBody className="flex flex-col justify-between gap-1 pb-0">
-          <p className="line-clamp-4 text-sm">{title}</p>
+          <p className="line-clamp-2 text-sm">{title}</p>
           <Divider className="my-1" />
           <div className="text-tiny flex justify-start gap-1 items-center">
             <MdOutlineUpdate size={12} />
@@ -51,7 +52,11 @@ const Item: FC<Props> = ({ item, projectId, stepId }) => {
           </div>
         </CardBody>
         <CardFooter className="justify-end gap-1">
-          <Marker color={color} className="mr-auto" />
+          <Marker
+            color={color}
+            className="mr-auto"
+            onPress={() => openViewStepItemModal({ projectId, stepId, item })}
+          />
           <Button
             radius="full"
             size="sm"
@@ -64,6 +69,7 @@ const Item: FC<Props> = ({ item, projectId, stepId }) => {
             radius="full"
             size="sm"
             startContent={<CiViewTimeline size={15} />}
+            onPress={() => openViewStepItemModal({ projectId, stepId, item })}
           >
             View
           </Button>
