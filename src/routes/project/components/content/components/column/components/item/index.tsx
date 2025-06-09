@@ -3,6 +3,14 @@ import type { FC } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { motion } from "framer-motion";
 import { CSS } from "@dnd-kit/utilities";
+import { Card, CardBody, CardFooter } from "@heroui/card";
+import { CiEdit } from "react-icons/ci";
+import { CiViewTimeline } from "react-icons/ci";
+import { Button } from "@heroui/button";
+import Marker from "@common/components/marker";
+import { MdOutlineUpdate } from "react-icons/md";
+import { formatDateFromIso } from "@common/helpers/format-date-from-iso.ts";
+import { Divider } from "@heroui/divider";
 
 interface Props {
   projectId: string;
@@ -10,7 +18,8 @@ interface Props {
 }
 
 const Item: FC<Props> = ({ item }) => {
-  const { id, title } = item;
+  const { id, title, color, updatedAt } = item;
+  const displayUpdateAt = formatDateFromIso(updatedAt, "dateWithTime");
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -24,9 +33,35 @@ const Item: FC<Props> = ({ item }) => {
         transform: CSS.Transform.toString(transform),
         transition: transition,
       }}
-      className="w-full h-[200px] bg-red-500 cursor-grab [&:not(:last-child)]:mb-2"
+      className="w-full cursor-grab [&:not(:last-child)]:mb-2"
     >
-      {title}
+      <Card
+        shadow="none"
+        className="w-full scroll-hidden border-1 select-none"
+        style={{ borderColor: color }}
+      >
+        <CardBody className="flex flex-col justify-between gap-1 pb-0">
+          <p className="line-clamp-4 text-sm">{title}</p>
+          <Divider className="my-1" />
+          <div className="text-tiny flex justify-start gap-1 items-center">
+            <MdOutlineUpdate size={12} />
+            <span>{displayUpdateAt}</span>
+          </div>
+        </CardBody>
+        <CardFooter className="justify-end gap-1">
+          <Marker color={color} className="mr-auto" />
+          <Button radius="full" size="sm" startContent={<CiEdit size={15} />}>
+            Edit
+          </Button>
+          <Button
+            radius="full"
+            size="sm"
+            startContent={<CiViewTimeline size={15} />}
+          >
+            View
+          </Button>
+        </CardFooter>
+      </Card>
     </motion.div>
   );
 };
