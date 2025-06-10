@@ -1,13 +1,28 @@
-## Flowengo
+<h1 style="display: flex; flex-direction: row; align-items: center; gap: 10px">
+<p align="center"><img style="border-radius: 15px;" align="center" width="40" src="./app-icon.png"/></p>
+<span>Flowengo</span>
+</h1>
 
 Flowengo is a clean, fast, and minimalist desktop application for managing tasks with a Kanban-style board. Whether you're planning personal goals, managing work projects, or organizing your daily to-dos, Flowengo helps you stay focused and in control.
 
 Create boards, add task cards, move them across customizable columns, and track your progress—all without distractions, right on your desktop.
 
 
+### Tech Stack
+
+**Client:** React, TailwindCSS, Rust, Tauri
+
+
 ### Development
 
 Requirements: Rust, Npm, Cargo
+
+Install node dependencies
+
+```bash
+npm install
+```
+
 
 Start project:
 
@@ -26,3 +41,7 @@ Build project
 ```bash
 npm run tauri build
 ```
+
+
+
+> Node: v22.13.0 Npm: 10.9.2 Rust: 1.86.0
