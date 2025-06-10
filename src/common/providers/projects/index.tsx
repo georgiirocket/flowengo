@@ -13,6 +13,7 @@ import {
 } from "react";
 import debounce from "lodash/debounce";
 import { updateProtectedData } from "@common/actions/update-protected-data";
+import { addToast } from "@heroui/react";
 
 type TypeStore = Store;
 const createStoreFn = createProjectsStore;
@@ -42,6 +43,8 @@ const Provider: FC<PropsWithChildren<InitProps>> = ({ children, data }) => {
           console.error("Save backend data", error);
         }
       } catch (e) {
+        addToast({ title: "Request failed", color: "danger", timeout: 2000 });
+
         console.error("Save backend data", e);
       }
     }, 1000),
