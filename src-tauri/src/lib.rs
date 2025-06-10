@@ -77,11 +77,17 @@ pub fn run() {
             });
 
 
-            let app_handle = app.handle().clone();
+            {
+                let app_handle = app.handle().clone();
 
-            app.listen("quit-app", move |_event| {
-                app_handle.exit(0);
-            });
+                app.listen("quit-app", move |_event| {
+                    app_handle.exit(0);
+                });
+            }
+
+            // app.listen("quit-app", move |_event| {
+            //     app_handle.exit(0);
+            // });
 
             let common_store = app.store(constants::STORE_PATH_COMMON)?;
 
