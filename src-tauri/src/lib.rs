@@ -2,7 +2,7 @@
 
 use serde_json::from_value;
 use std::sync::Mutex;
-use tauri::{Listener, Manager};
+use tauri::{Emitter, Listener, Manager};
 use tauri_plugin_store::StoreExt;
 
 mod commands;
@@ -19,6 +19,64 @@ pub fn run() {
         .manage(Mutex::new(model::AppState::new()))
         .plugin(tauri_plugin_store::Builder::default().build())
         .setup(|app| {
+            let drop_item_menu = tauri::menu::MenuItemBuilder::new("Drop user data")
+                .id("drop-user-data")
+                .build(app)?;
+
+            let app_submenu = tauri::menu::SubmenuBuilder::new(app, "App")
+                .about(Some(tauri::menu::AboutMetadata {
+                    ..Default::default()
+                }))
+                .separator()
+                .item(&drop_item_menu)
+                .separator()
+                .separator()
+                .hide()
+                .hide_others()
+                .quit()
+                .build()?;
+
+            let edit_submenu = tauri::menu::SubmenuBuilder::new(app, "Edit")
+                .undo()
+                .redo()
+                .separator()
+                .cut()
+                .copy()
+                .paste()
+                .select_all()
+                .separator()
+                .build()?;
+
+            let view_submenu = tauri::menu::SubmenuBuilder::new(app, "View")
+                .fullscreen()
+                .build()?;
+
+            let window_submenu = tauri::menu::SubmenuBuilder::new(app, "Window")
+                .minimize()
+                .maximize()
+                .separator()
+                .close_window()
+                .build()?;
+
+            let menu = tauri::menu::MenuBuilder::new(app)
+                .items(&[
+                    &app_submenu,
+                    &edit_submenu,
+                    &view_submenu,
+                    &window_submenu,
+                ])
+                .build()?;
+
+            app.set_menu(menu)?;
+
+            app.on_menu_event(move |app, event| {
+                if event.id() == drop_item_menu.id() {
+                    // emit a window event to the frontend
+                    let _event = app.emit("drop-data", "");
+                }
+            });
+
+
             let app_handle = app.handle().clone();
 
             app.listen("quit-app", move |_event| {

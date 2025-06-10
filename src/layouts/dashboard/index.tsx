@@ -1,10 +1,9 @@
-import { type FC, lazy, useEffect } from "react";
+import { type FC, lazy } from "react";
 import useSWR from "swr";
 import { getProtectedData } from "@common/actions/get-protected-data";
 import { ProjectsProvider } from "@common/providers/projects";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/footer";
-import { menu } from "@common/tauri/native-menu";
 
 const UserModal = lazy(() => import("./components/modals/user"));
 const NewProjectModal = lazy(() => import("./components/modals/new-project"));
@@ -28,14 +27,6 @@ const DashboardLayout: FC = () => {
   if (result.error || !result.data) {
     throw new Error(result.error);
   }
-
-  useEffect(() => {
-    menu.enableProjectMenu(true);
-
-    return () => {
-      menu.enableProjectMenu(false);
-    };
-  }, []);
 
   return (
     <ProjectsProvider data={result.data}>
