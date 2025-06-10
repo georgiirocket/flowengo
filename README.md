@@ -4,16 +4,22 @@ Flowengo is a clean, fast, and minimalist desktop application for managing tasks
 
 Create boards, add task cards, move them across customizable columns, and track your progressâ€”all without distractions, right on your desktop.
 
+---
 
 ### System requirements
 - **Windows:** 7 and above
 - **macOS:** 10.15 and above
 - **Linux:** webkit2gtk 4.0 for Tauri v1 (for example Ubuntu 18.04). webkit2gtk 4.1 for Tauri v2 (for example Ubuntu 22.04).
 
+### Windows
+[![Download for Windows](https://img.shields.io/badge/Windows-x64-blue?logo=windows)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_x64_en-US.msi)
 
-### Tech Stack
+### MacOS
+[![Download for macOS (Apple Silicon)](https://img.shields.io/badge/macOS-ARM--aarch64-lightgrey?logo=apple)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_aarch64.dmg)
+[![Download for macOS (Intel)](https://img.shields.io/badge/macOS-Intel--x64-lightgrey?logo=apple)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_x64.dmg)
 
-**Client:** React, TailwindCSS, Rust, Tauri
+### Linux
+[![Download for Linux](https://img.shields.io/badge/Linux-x64-yellow?logo=linux)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_amd64.AppImage)
 
 ---
 
@@ -67,7 +73,7 @@ We use cryptography when storing your data on disk.
 ---
 
 
-## FAQ
+### FAQ
 
 #### I forgot my password
 
@@ -76,6 +82,12 @@ You can reset all data along with your account. This can be done by selecting â€
 #### Can I recover my data if I lose my password?
 
 Since we can't verify the authenticity of your face. The only options are to reset your data or enter the correct password
+
+---
+
+### Tech Stack
+
+**Client:** React, TailwindCSS, Rust, Tauri
 
 ---
 
