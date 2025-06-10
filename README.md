@@ -53,6 +53,19 @@ We use cryptography when storing your data on disk.
 
 ---
 
+
+## FAQ
+
+#### I forgot my password
+
+You can reset all data along with your account. This can be done by selecting “Drop user data” from the system menu
+
+#### Can I recover my data if I lose my password?
+
+Since we can't verify the authenticity of your face. The only options are to reset your data or enter the correct password
+
+---
+
 ### Development
 
 Requirements: Rust, Npm, Cargo
