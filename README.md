@@ -11,7 +11,45 @@ Create boards, add task cards, move them across customizable columns, and track 
 
 ---
 
+### Crypto
+
+We use cryptography when storing your data on disk.
+
 <img src="./screenshot/auth.png" alt="auth" width="1000"/>
+
+### Common board
+
+- Fast and intuitive interface.
+- Easy navigation
+- Moving tasks between columns
+
+<img src="./screenshot/board.png" alt="board" width="1000"/>
+
+
+### Several boards
+
+- Create multiple projects
+- Create custom columns
+- Rename them and swap them out.
+- Free switching between projects
+
+<img src="./screenshot/new-project.png" alt="new-project" width="1000"/>
+<img src="./screenshot/multi-project.png" alt="multi" width="1000"/>
+
+### Task handling
+
+- Create, modify, move, remove, view tasks
+- Use Rich editor for detailed task descriptions
+
+<img src="./screenshot/edit-task.png" alt="edit-task" width="1000"/>
+<img src="./screenshot/view-task.png" alt="view-task" width="1000"/>
+
+### Theme
+
+- Light and dark mode
+- You can use the system theme if your device supports it
+
+<img src="./screenshot/theme.png" alt="theme" width="1000"/>
 
 ---
 
