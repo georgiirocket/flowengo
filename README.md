@@ -11,6 +11,8 @@ Create boards, add task cards, move them across customizable columns, and track 
 - **macOS:** 10.15 and above
 - **Linux:** webkit2gtk 4.0 for Tauri v1 (for example Ubuntu 18.04). webkit2gtk 4.1 for Tauri v2 (for example Ubuntu 22.04).
 
+---
+
 ### Windows
 [![Download for Windows](https://img.shields.io/badge/Windows-x64-blue?logo=windows)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_x64_en-US.msi)
 
@@ -18,14 +20,21 @@ Create boards, add task cards, move them across customizable columns, and track 
 [![Download for macOS (Apple Silicon)](https://img.shields.io/badge/macOS-ARM--aarch64-lightgrey?logo=apple)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_aarch64.dmg)
 [![Download for macOS (Intel)](https://img.shields.io/badge/macOS-Intel--x64-lightgrey?logo=apple)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_x64.dmg)
 
-### Linux
-[![Download for Linux](https://img.shields.io/badge/Linux-x64-yellow?logo=linux)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_amd64.AppImage)
-
----
-
 Apple Silicon users, please run this command to prevent the error saying the app is broken (not required if installing using homebrew):
 ```bash
 xattr -cr /Applications/flowengo.app
+```
+
+### Linux
+
+[![Download for Linux](https://img.shields.io/badge/Linux-x64-yellow?logo=linux)](https://github.com/georgiirocket/flowengo/releases/latest/download/flowengo_0.1.0_amd64.deb)
+
+- Download app
+- Open Downloads
+- Right mouse click (Open current folder in terminal)
+
+```bash
+sudo dpkg -i flowengo_0.1.0_amd64.deb
 ```
 
 ---
