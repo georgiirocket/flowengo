@@ -5,9 +5,22 @@ Flowengo is a clean, fast, and minimalist desktop application for managing tasks
 Create boards, add task cards, move them across customizable columns, and track your progress—all without distractions, right on your desktop.
 
 
+### System requirements
+- **Windows:** 7 and above
+- **macOS:** 10.15 and above
+- **Linux:** webkit2gtk 4.0 for Tauri v1 (for example Ubuntu 18.04). webkit2gtk 4.1 for Tauri v2 (for example Ubuntu 22.04).
+
+
 ### Tech Stack
 
 **Client:** React, TailwindCSS, Rust, Tauri
+
+---
+
+Apple Silicon users, please run this command to prevent the error saying the app is broken (not required if installing using homebrew):
+```bash
+xattr -cr /Applications/flowengo.app
+```
 
 ---
 
