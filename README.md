@@ -9,6 +9,11 @@ Create boards, add task cards, move them across customizable columns, and track 
 
 **Client:** React, TailwindCSS, Rust, Tauri
 
+---
+
+<img src="./screenshot/auth.png" alt="auth" width="800"/>
+
+---
 
 ### Development
 
