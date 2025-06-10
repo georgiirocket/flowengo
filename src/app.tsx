@@ -12,6 +12,7 @@ import Dashboard from "@routes/dashboard";
 import Project from "@routes/project";
 import "./app.css";
 import { useMainResize } from "@common/hooks/use-main-resize.ts";
+import { useDisableBack } from "@common/hooks/use-disable-back.ts";
 
 const DropDataModal = lazy(() => import("@common/modals/drop-data"));
 
@@ -21,6 +22,7 @@ function App() {
   });
 
   const { mainRef } = useMainResize();
+  useDisableBack();
 
   return (
     <AppProvider data={data}>
