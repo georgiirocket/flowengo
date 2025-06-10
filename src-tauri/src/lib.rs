@@ -30,7 +30,6 @@ pub fn run() {
                 .separator()
                 .item(&drop_item_menu)
                 .separator()
-                .separator()
                 .hide()
                 .hide_others()
                 .quit()
