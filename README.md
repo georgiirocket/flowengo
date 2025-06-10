@@ -1,7 +1,4 @@
-<h1 style="display: flex; flex-direction: row; align-items: center; gap: 10px">
-<p align="center"><img style="border-radius: 15px;" align="center" width="40" src="./app-icon.png"/></p>
-<span>Flowengo</span>
-</h1>
+## Flowengo
 
 Flowengo is a clean, fast, and minimalist desktop application for managing tasks with a Kanban-style board. Whether you're planning personal goals, managing work projects, or organizing your daily to-dos, Flowengo helps you stay focused and in control.
 
