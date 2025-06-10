@@ -8,7 +8,13 @@ const Description: FC = () => {
     (state) => state.setDescription,
   );
 
-  return <Editor value={description} onValueChange={setDescription} />;
+  return (
+    <Editor
+      isStickyToolbar
+      value={description}
+      onValueChange={setDescription}
+    />
+  );
 };
 
 export default Description;

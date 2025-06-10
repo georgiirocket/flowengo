@@ -29,13 +29,19 @@ const extensions = [
 interface Props {
   value: string;
   onValueChange?(n: string): void;
+  isStickyToolbar?: boolean;
   isView?: boolean;
 }
 
-const Editor: FC<Props> = ({ value, isView, onValueChange }) => {
+const Editor: FC<Props> = ({
+  value,
+  isView,
+  onValueChange,
+  isStickyToolbar,
+}) => {
   return (
     <EditorProvider
-      slotBefore={!isView && <Toolbar />}
+      slotBefore={!isView && <Toolbar isStickyToolbar={isStickyToolbar} />}
       extensions={extensions}
       content={value}
       editable={!isView}

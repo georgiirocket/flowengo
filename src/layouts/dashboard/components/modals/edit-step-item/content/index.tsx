@@ -4,6 +4,7 @@ import { Button } from "@heroui/button";
 import Title from "./components/title";
 import Description from "./components/description";
 import Colors from "./components/colors";
+import Header from "./components/header";
 import { useProjectsCtxStore } from "@common/providers/projects";
 import { useEditStepItemCtxStore } from "../provider";
 
@@ -30,8 +31,10 @@ const Content: FC<{ close: () => void }> = ({ close }) => {
 
   return (
     <>
-      <ModalHeader className="flex flex-col gap-1">Edit task</ModalHeader>
-      <ModalBody className="gap-2">
+      <ModalHeader className="flex gap-2 items-center">
+        <Header />
+      </ModalHeader>
+      <ModalBody className="gap-2 relative">
         <Title />
         <Colors />
         <Description />

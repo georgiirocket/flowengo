@@ -10,8 +10,15 @@ import { BsTypeH2 } from "react-icons/bs";
 import { BsTypeH3 } from "react-icons/bs";
 import { FaParagraph } from "react-icons/fa";
 import { MdHorizontalRule } from "react-icons/md";
+import { MdInvertColorsOff } from "react-icons/md";
+import { EDITOR_COLORS } from "./colors";
+import { twJoin } from "tailwind-merge";
 
-const Toolbar: FC = () => {
+interface Props {
+  isStickyToolbar?: boolean;
+}
+
+const Toolbar: FC<Props> = ({ isStickyToolbar }) => {
   const { editor } = useCurrentEditor();
 
   if (!editor) {
@@ -19,7 +26,12 @@ const Toolbar: FC = () => {
   }
 
   return (
-    <Code className="mb-2 flex gap-1 items-center">
+    <Code
+      className={twJoin(
+        "mb-2 flex gap-1 items-center",
+        isStickyToolbar && "sticky top-0 left-0 z-[20] bg-default",
+      )}
+    >
       <Button
         size="sm"
         isIconOnly
@@ -85,6 +97,51 @@ const Toolbar: FC = () => {
         onPress={() => editor.chain().focus().setHorizontalRule().run()}
       >
         <MdHorizontalRule size={15} />
+      </Button>
+      <Divider className="h-[30px]" orientation="vertical" />
+      <Button
+        radius="full"
+        size="sm"
+        isIconOnly
+        variant={
+          editor.isActive("textStyle", { color: EDITOR_COLORS.default })
+            ? "shadow"
+            : "light"
+        }
+        onPress={() =>
+          editor.chain().focus().setColor(EDITOR_COLORS.default).run()
+        }
+      >
+        <div
+          className="size-[15px] rounded-full"
+          style={{ backgroundColor: EDITOR_COLORS.default }}
+        />
+      </Button>
+      <Button
+        radius="full"
+        size="sm"
+        isIconOnly
+        variant={
+          editor.isActive("textStyle", { color: EDITOR_COLORS.yellow })
+            ? "shadow"
+            : "light"
+        }
+        onPress={() =>
+          editor.chain().focus().setColor(EDITOR_COLORS.yellow).run()
+        }
+      >
+        <div
+          className="size-[15px] rounded-full"
+          style={{ backgroundColor: EDITOR_COLORS.yellow }}
+        />
+      </Button>
+      <Button
+        radius="full"
+        size="sm"
+        isIconOnly
+        onPress={() => editor?.commands.unsetColor()}
+      >
+        <MdInvertColorsOff size={15} />
       </Button>
     </Code>
   );
