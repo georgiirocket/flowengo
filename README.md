@@ -11,7 +11,7 @@ Create boards, add task cards, move them across customizable columns, and track 
 
 ---
 
-<img src="./screenshot/auth.png" alt="auth" width="800"/>
+<img src="./screenshot/auth.png" alt="auth" width="1000"/>
 
 ---
 
