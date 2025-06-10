@@ -43,7 +43,7 @@ const Provider: FC<PropsWithChildren<InitProps>> = ({ children, data }) => {
           console.error("Save backend data", error);
         }
       } catch (e) {
-        addToast({ title: "Request failed", color: "danger", timeout: 2000 });
+        addToast({ title: "Request failed", color: "danger" });
 
         console.error("Save backend data", e);
       }

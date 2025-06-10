@@ -5,7 +5,7 @@ import { ToastProvider } from "@heroui/toast";
 const HeroUiProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <UiProvider>
-      <ToastProvider placement="top-right" />
+      <ToastProvider placement="top-right" toastProps={{ timeout: 2000 }} />
       {children}
     </UiProvider>
   );
