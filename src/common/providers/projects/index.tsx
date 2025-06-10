@@ -6,9 +6,13 @@ import {
   createContext,
   type FC,
   type PropsWithChildren,
+  useCallback,
   useContext,
+  useEffect,
   useRef,
 } from "react";
+import debounce from "lodash/debounce";
+import { updateProtectedData } from "@common/actions/update-protected-data";
 
 type TypeStore = Store;
 const createStoreFn = createProjectsStore;
@@ -28,6 +32,34 @@ const Provider: FC<PropsWithChildren<InitProps>> = ({ children, data }) => {
   if (!storeRef.current) {
     storeRef.current = createStoreFn(data);
   }
+
+  const debounceFn = useCallback(
+    debounce(async (data: Store["projectsData"]) => {
+      try {
+        const { error } = await updateProtectedData(JSON.stringify(data));
+
+        if (error) {
+          console.error("Save backend data", error);
+        }
+      } catch (e) {
+        console.error("Save backend data", e);
+      }
+    }, 1000),
+    [],
+  );
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const unSubscribe = storeRef.current?.subscribe((newStore, oldStore) => {
+      if (oldStore.projectsData.version !== newStore.projectsData.version) {
+        debounceFn(newStore.projectsData);
+      }
+    });
+
+    return () => {
+      unSubscribe?.();
+    };
+  }, []);
 
   return (
     <Context.Provider value={{ store: storeRef.current }}>

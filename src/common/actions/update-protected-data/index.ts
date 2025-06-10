@@ -4,11 +4,13 @@ export interface UpdateProtectedData {
   error: string;
 }
 
-export const updateProtectedData = async (): Promise<UpdateProtectedData> => {
+export const updateProtectedData = async (
+  jsonStr: string,
+): Promise<UpdateProtectedData> => {
   const response: UpdateProtectedData = { error: "" };
 
   try {
-    await invoke("update_protected_data");
+    await invoke("update_protected_data", { jsonStr });
   } catch (e) {
     response.error = e as string;
   }
