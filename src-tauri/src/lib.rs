@@ -14,6 +14,8 @@ mod model;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Mutex::new(model::AppState::new()))
@@ -23,10 +25,21 @@ pub fn run() {
                 .id("drop-user-data")
                 .build(app)?;
 
+            let check_for_updates = tauri::menu::MenuItemBuilder::new("Check for updates")
+                .id("check_for_updates")
+                .build(app)?;
+
+            let update_notification = tauri::menu::MenuItemBuilder::new("Update notification")
+                .id("update_notification")
+                .build(app)?;
+
             let app_submenu = tauri::menu::SubmenuBuilder::new(app, "App")
                 .about(Some(tauri::menu::AboutMetadata {
                     ..Default::default()
                 }))
+                .separator()
+                .item(&check_for_updates)
+                .item(&update_notification)
                 .separator()
                 .item(&drop_item_menu)
                 .separator()
@@ -58,23 +71,37 @@ pub fn run() {
                 .build()?;
 
             let menu = tauri::menu::MenuBuilder::new(app)
-                .items(&[
-                    &app_submenu,
-                    &edit_submenu,
-                    &view_submenu,
-                    &window_submenu,
-                ])
+                .items(&[&app_submenu, &edit_submenu, &view_submenu, &window_submenu])
                 .build()?;
 
             app.set_menu(menu)?;
 
-            app.on_menu_event(move |app, event| {
-                if event.id() == drop_item_menu.id() {
-                    // emit a window event to the frontend
-                    let _event = app.emit("drop-data", "");
-                }
-            });
+            {
+                app.on_menu_event(move |app, event| {
+                    if event.id() == update_notification.id() {
+                        // emit a window event to the frontend
+                        let _event = app.emit("update-notification", "");
+                    }
+                });
+            }
 
+            {
+                app.on_menu_event(move |app, event| {
+                    if event.id() == check_for_updates.id() {
+                        // emit a window event to the frontend
+                        let _event = app.emit("check-for-updates", "");
+                    }
+                });
+            }
+
+            {
+                app.on_menu_event(move |app, event| {
+                    if event.id() == drop_item_menu.id() {
+                        // emit a window event to the frontend
+                        let _event = app.emit("drop-data", "");
+                    }
+                });
+            }
 
             {
                 let app_handle = app.handle().clone();
@@ -83,10 +110,6 @@ pub fn run() {
                     app_handle.exit(0);
                 });
             }
-
-            // app.listen("quit-app", move |_event| {
-            //     app_handle.exit(0);
-            // });
 
             let common_store = app.store(constants::STORE_PATH_COMMON)?;
 

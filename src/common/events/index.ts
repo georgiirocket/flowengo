@@ -7,4 +7,6 @@ export enum EVENTS {
   newStepItem = "new-step-item",
   editStepItem = "edit-step-item",
   viewStepItem = "view-step-item",
+  checkForUpdates = "check-for-updates",
+  updateNotification = "update-notification",
 }

@@ -13,6 +13,7 @@ import Project from "@routes/project";
 import "./app.css";
 import { useMainResize } from "@common/hooks/use-main-resize.ts";
 import { useDisableBack } from "@common/hooks/use-disable-back.ts";
+import { useUpdater } from "@common/hooks/use-updater.tsx";
 
 const DropDataModal = lazy(() => import("@common/modals/drop-data"));
 
@@ -21,8 +22,10 @@ function App() {
     suspense: true,
   });
 
-  const { mainRef } = useMainResize();
   useDisableBack();
+  useUpdater();
+
+  const { mainRef } = useMainResize();
 
   return (
     <AppProvider data={data}>
