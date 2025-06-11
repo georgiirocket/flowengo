@@ -19,7 +19,7 @@ const CommonLoading: FC = () => {
           <motion.p
             className="text-2xl overflow-hidden"
             initial={{ width: 0 }}
-            animate={{ width: 101 }}
+            animate={{ width: 106 }}
             transition={{ delay: 0.7, duration: 0.5 }}
           >
             {appName}
