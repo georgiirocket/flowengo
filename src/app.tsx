@@ -12,6 +12,8 @@ import Dashboard from "@routes/dashboard";
 import Project from "@routes/project";
 import "./app.css";
 import { useMainResize } from "@common/hooks/use-main-resize.ts";
+import { useDisableBack } from "@common/hooks/use-disable-back.ts";
+import { useUpdater } from "@common/hooks/use-updater.tsx";
 
 const DropDataModal = lazy(() => import("@common/modals/drop-data"));
 
@@ -19,6 +21,9 @@ function App() {
   const { data } = useSWR("init", () => promiseWithDelay(getAppState, 2000), {
     suspense: true,
   });
+
+  useDisableBack();
+  useUpdater();
 
   const { mainRef } = useMainResize();
 
