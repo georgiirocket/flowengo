@@ -6,6 +6,7 @@ import { formatDateFromIso } from "@common/helpers/format-date-from-iso.ts";
 import { openRemoveDataModal } from "@common/hooks/use-drop-data-modal.ts";
 import { Divider } from "@heroui/divider";
 import ThemeComponent from "./components/theme";
+import Updates from "./components/updates";
 import { logOut } from "@common/actions/log-out";
 
 const Content: FC = () => {
@@ -34,6 +35,8 @@ const Content: FC = () => {
         </div>
         <Divider />
         <ThemeComponent />
+        <Divider />
+        <Updates />
       </ModalBody>
       <ModalFooter>
         <Button
